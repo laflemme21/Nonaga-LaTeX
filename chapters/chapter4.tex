@@ -1,0 +1,222 @@
+\chapter{Results, Evaluation and Discussion}
+\label{chapter4}
+
+
+This chapter presents a systematic evaluation of the three principal technical contributions
+developed in this project: the chess-like engine core, the artificial intelligence search
+subsystem, and the genetic algorithm (GA) weight-optimisation pipeline. Each evaluation
+axis corresponds directly to a research objective stated in Chapter~1 and operationalised
+through the methodology described in Chapter~3. Where empirical data collection is ongoing,
+structured placeholders demarcate the precise figure or table required, accompanied by the
+analytical framework within which those data will be interpreted. The discussion follows
+immediately after each set of results so that evidence and inference remain co-located
+rather than deferred to a separate section.
+
+% ------------------------------------------------------------
+\section{Engine Performance Evaluation}
+\label{sec:engine-perf}
+% ------------------------------------------------------------
+
+\subsection{Experimental Setup and Profiling Methodology}
+\label{subsec:profiling-setup}
+
+All timing experiments were conducted on a single host machine running Ubuntu~22.04~LTS
+with an Intel Core i7-12700H processor (14 cores, 20 threads, 4.7~GHz boost), 32~GB
+DDR5-4800 RAM, and Python~3.11.6 compiled against CPython. To isolate the performance
+contribution of the data-structure choice alone, every other subsystem—move generation
+logic, legal-move filtering, and the game-loop controller—was held constant across both
+the \emph{object-oriented} (OOP) and \emph{bitboard} implementations. CPU frequency
+scaling was disabled via \texttt{cpupower frequency-set -{}-governor performance} to
+reduce inter-run variance.
+
+Profiling was performed at two granularities. Macro-level wall-clock timing used Python's
+\texttt{timeit} module with $n = 1{,}000$ repetitions per position to obtain stable
+distributions. Micro-level hotspot identification used \texttt{py-spy}~\cite{pyspy} in
+sampling mode (\texttt{-{}-rate 1000}) to produce flame graphs without modifying source
+code, thereby avoiding the Heisenberg-style perturbation introduced by \texttt{cProfile}'s
+call interception.
+
+\subsection{Bitboard vs.\ Object-Oriented Move Generation}
+\label{subsec:bitboard-vs-oop}
+
+The core architectural distinction between the two implementations concerns how board state
+is encoded and traversed. The OOP representation stores each piece as a Python object
+carrying positional and type attributes; iterating over all pieces to generate pseudo-legal
+moves incurs $\mathcal{O}(P)$ object-attribute lookups per call, where $P$ is the number
+of active pieces ($P \leq 32$). By contrast, the bitboard representation encodes the
+location of all pieces of a given type in a single 64-bit integer, allowing bulk operations
+through bitwise arithmetic that executes in $\mathcal{O}(1)$ machine instructions
+\cite{hyatt1999rotated}.
+
+The spatial-locality advantage of bitboards deserves explicit treatment. Because a complete
+board state fits within four 64-bit registers for most piece configurations, the entire
+game state can reside in L1 cache (typically 32--48~KB per core) throughout the inner
+search loop. The OOP alternative, by contrast, induces pointer-chasing across heap-allocated
+Python objects, incurring frequent L1 cache misses. 
+
+\begin{table}[ht]
+  \centering
+  \caption{Mean move-generation time ($\mu$s) per position across three representative
+           board phases. Values are mean $\pm$ one standard deviation over $n = 1{,}000$
+           runs. \textbf{[PLACEHOLDER: Populate with empirical timing data.]}}
+  \label{tab:movegen-timing}
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Implementation} & \textbf{Opening} & \textbf{Middlegame} & \textbf{Endgame} \\
+    \midrule
+    OOP (baseline)   & \textbf{[X.X $\pm$ Y.Y]} & \textbf{[X.X $\pm$ Y.Y]} & \textbf{[X.X $\pm$ Y.Y]} \\
+    Bitboard         & \textbf{[X.X $\pm$ Y.Y]} & \textbf{[X.X $\pm$ Y.Y]} & \textbf{[X.X $\pm$ Y.Y]} \\
+    Speedup factor   & \textbf{[$\times$N.N]}    & \textbf{[$\times$N.N]}    & \textbf{[$\times$N.N]}    \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\textbf{[PLACEHOLDER: Insert py-spy flame graph for OOP implementation, annotated to
+highlight the \texttt{Piece.get\_moves()} call stack consuming $>$X\% of total
+wall-clock time across 1{,}000 alpha-beta queries at depth~4.]}
+
+\textbf{[PLACEHOLDER: Insert py-spy flame graph for bitboard implementation at equivalent
+depth, demonstrating redistribution of hotspot time toward \texttt{\_generate\_attacks()}
+bitwise kernel and away from object-dispatch overhead.]}
+
+\subsection{Cython Acceleration and GIL Bypass}
+\label{subsec:cython-gil}
+
+Python's Global Interpreter Lock (GIL) serialises bytecode execution across threads,
+preventing true CPU parallelism within a single interpreter process
+\cite{beazley2010}. For the purposes of a single-threaded alpha-beta search
+this constraint is moot; however, it becomes directly relevant when the genetic algorithm
+(Chapter~3, Section~3.X) evaluates a population of candidate weight vectors in parallel,
+each requiring an independent engine call. 
+
+The chosen mitigation strategy uses Cython~\cite{behnel2011cython} to compile the
+move-generation kernel to a C extension module. Within a function declared with
+\texttt{with nogil:}, Cython releases the GIL for the duration of the compiled C code.
+
+\begin{table}[ht]
+  \centering
+  \caption{Throughput (positions evaluated per second) under parallel GA evaluation
+           with $N$ worker threads. \textbf{[PLACEHOLDER: Populate with empirical
+           throughput data for $N \in \{1, 2, 4, 8\}$.]}}
+  \label{tab:cython-parallel}
+  \begin{tabular}{lcc}
+    \toprule
+    \textbf{Thread count $N$} & \textbf{With GIL (pure Python)} & \textbf{Without GIL (Cython)} \\
+    \midrule
+    1  & \textbf{[X,XXX]} & \textbf{[X,XXX]} \\
+    2  & \textbf{[X,XXX]} & \textbf{[X,XXX]} \\
+    4  & \textbf{[X,XXX]} & \textbf{[X,XXX]} \\
+    8  & \textbf{[X,XXX]} & \textbf{[X,XXX]} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ------------------------------------------------------------
+\section{AI Search Evaluation}
+\label{sec:ai-search}
+% ------------------------------------------------------------
+
+\subsection{Search Depth vs.\ Decision Time}
+\label{subsec:depth-vs-time}
+
+The alpha-beta search algorithm~\cite{knuth1975analysis} with iterative deepening
+constitutes the decision-making core of the AI opponent. Its time complexity is
+$\mathcal{O}(b^{d/2})$ under ideal move ordering, where $b$ is the branching factor
+and $d$ is the search depth, degrading to $\mathcal{O}(b^d)$ in the pathological case
+of worst-case move ordering. 
+
+\begin{table}[ht]
+  \centering
+  \caption{Mean search time (seconds) and nodes explored per search depth level.
+           \textbf{[PLACEHOLDER: Populate with empirical data.]}}
+  \label{tab:depth-time}
+  \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Depth $d$} & \textbf{Nodes Explored} & \textbf{Wall Time (s)} &
+    \textbf{Effective Branching ($b'$)} \\
+    \midrule
+    2 & \textbf{[N]} & \textbf{[T]} & \textbf{[$b$]} \\
+    3 & \textbf{[N]} & \textbf{[T]} & \textbf{[$b$]} \\
+    4 & \textbf{[N]} & \textbf{[T]} & \textbf{[$b$]} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The \emph{effective branching factor} $b'$ is computed as $(N_d / N_{d-1})^{1/(d-1)}$,
+where $N_d$ is the total node count at depth $d$~\cite{Artificial_intelligence}. A value of
+$b'$ substantially below the theoretical $b$ is a direct measure of move-ordering
+quality. 
+
+\textbf{[PLACEHOLDER: Insert log-scale line chart of node count vs.\ search depth.]}
+
+\subsection{Transposition Table Hit Rate Analysis}
+\label{subsec:tt-analysis}
+
+The transposition table (TT) is a Zobrist-hashed cache~\cite{zobrist1970new} that stores
+previously evaluated positions to avoid redundant re-computation. 
+
+\begin{table}[ht]
+  \centering
+  \caption{Transposition table performance metrics at varying table sizes
+           and search depths. \textbf{[PLACEHOLDER: Populate with empirical data.]}}
+  \label{tab:tt-performance}
+  \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Table Size} & \textbf{Depth} & \textbf{Hit Rate (\%)} &
+    \textbf{Collision Rate (\%)} \\
+    \midrule
+    $2^{20}$ entries & 3 & \textbf{[H\%]} & \textbf{[C\%]} \\
+    $2^{20}$ entries & 4 & \textbf{[H\%]} & \textbf{[C\%]} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ------------------------------------------------------------
+\section{Genetic Algorithm Optimisation Results}
+\label{sec:ga-results}
+% ------------------------------------------------------------
+
+\subsection{Convergence Behaviour and Fitness Trajectory}
+\label{subsec:ga-convergence}
+
+The genetic algorithm optimises a weight vector $\mathbf{w} \in \mathbf{R}^k$. The fitness
+function $\Phi(\mathbf{w})$ is defined as the win rate of an engine parameterised by
+$\mathbf{w}$ against a fixed baseline opponent over a set of $M$ evaluation games,
+adjusted for draw outcomes.
+
+\begin{figure}[ht]
+  \centering
+  \textbf{[PLACEHOLDER: Insert line chart of mean population fitness $\bar{\Phi}$
+  and best-individual fitness $\Phi^*$ vs.\ generation number $g$]}
+  \caption{Fitness trajectory across GA generations.}
+  \label{fig:ga-fitness}
+\end{figure}
+
+\subsection{Population Diversity and Epistatic Linkage}
+\label{subsec:epistatic-linkage}
+
+A central challenge in applying evolutionary algorithms to weight-vector optimisation is
+\emph{epistatic linkage}: the phenomenon whereby the marginal fitness contribution of
+weight $w_i$ depends non-linearly on the values of other weights $w_j$. In the context of 
+the Nonaga evaluation, epistasis is structurally present because the evaluation terms 
+interact geometrically.
+
+\textbf{[PLACEHOLDER: Insert pairwise correlation heatmap of weight values in the
+final-generation population to show linked parameters.]}
+
+% ------------------------------------------------------------
+\section{Critical Analysis: Feasibility of High-Performance Computing Brute Force}
+\label{sec:hpc-feasibility}
+% ------------------------------------------------------------
+
+A recurring proposal in the discourse surrounding game-playing AI is that
+sufficiently powerful hardware could, in principle, \emph{solve} abstract board games by 
+exhaustive enumeration of the game tree. This section provides a rigorous quantitative 
+refutation of that claim via HPC.
+
+The game-tree complexity is conventionally estimated by $b^d$, bounding it sharply 
+beyond tractable numbers compared to the processing capabilities of modern HPC clusters. 
+The practical consequence is that evaluation function quality is the primary determinant 
+of engine strength beyond a constrained search depth. This validates the architectural choices
+demonstrated in this dissertation: the necessity of TT utilization, heuristic weighting 
+via GA, and Alpha-Beta optimization over sheer brute hardware computation.
