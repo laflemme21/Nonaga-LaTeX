@@ -200,7 +200,7 @@ To mitigate the risk of performance degradation during the optimization phase, a
 
 This continuous profiling loop was sustained until the Minimax algorithm achieved a stable execution time of a few seconds per move at a search depth of $d=3$. Scaling the search space to $d=4$ resulted in execution times exceeding 100 seconds per move. Because Minimax expands exponentially with respect to the branching factor ($O(b^d)$), further low-level optimization of the bitboard yielded diminishing returns. Therefore, a pragmatic architectural decision was made to terminate the optimization phase. A depth of 3 provided highly satisfactory AI proficiency, representing an optimal trade-off between computational tractability and heuristic search depth within the project's time constraints.
 
-\subsection{Empirical Validation Of The Evolutionary Heuristic Optimization}
+\subsection{Empirical Validation Of The Evolutionary Heuristic Optimization} \label{GA testing}
 
 Early considerations of the GA's tournament selection highlighted a fundamental algorithmic challenge known as the "relative fitness" problem \cite{rosin1997new}. Because a candidate chromosome's fitness is evaluated by playing matches against a limited subset of the current population, its apparent viability is entirely dependent on its immediate neighbors. For instance, a globally excellent gene tested exclusively by other highly evolved genes might yield a mediocre win-rate and be incorrectly discarded. Conversely, an average gene situated in a poorly performing sub-population might appear exceptional, an issue that can ultimately lead to a loss of evolutionary gradient or coevolutionary disengagement \cite{ficici2000game}.
 

@@ -13,6 +13,23 @@
 \usepackage{subcaption}
 \usepackage{amsmath}
 \usepackage{booktabs}
+% Load hyperref for clickable links
+\usepackage[
+    pagebackref=true,  % Adds a link back to the citing page in the bibliography
+    colorlinks=true,   % Colors the text instead of drawing a box around it
+    linkcolor=blue,    % Color for internal document links (sections, figures)
+    citecolor=blue,    % Color for bibliography citations
+    urlcolor=blue      % Color for external web links
+]{hyperref}
+\usepackage[capitalize,noabbrev]{cleveref}
+
+% Optional: Customize how the back-reference text looks in the bibliography
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+    \ifcase #1 (Not cited.)%
+    \or        (Cited on page #2.)%
+    \else      (Cited on pages #2.)%
+    \fi}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
