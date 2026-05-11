@@ -42,7 +42,7 @@
 % Other appendices can be added here following the same pattern as above.
 %
 
-\chapter{Nonaga's Branching Factor Calculation}\label{branching}
+\chapter{Nonaga's Branching Factor Calculation}\label[appendix]{branching}
 % Review Iterative Deepening Minimax and Alpha-Beta pruning.
 % Discuss Zobrist hashing and state reuse.
 The number of possible moves in any Nonaga board state is given by the following equation: \\
@@ -108,10 +108,62 @@ After the piece move shown in \cref{fig:starting piece move to unmovable}, the t
 
 
 
+\chapter{Brute-Force Feasibility Analysis}
+\label[appendix]{sec:hpc_feasibility}
+
+A suggestion raised development ~\cite{assessor} was to evaluate whether
+exhaustive enumeration of the evaluation-function weight space, potentially parallelised
+on the University of Leeds AIRE HPC cluster, could have served as a viable alternative to
+the GA. This section discusses the computational and theoretical infeasibility of that approach.
+
+The evaluation function is parameterised by eight integer weights $w_i \in [0, 50]$,
+yielding a search space of $51^8 \approx 1.885 \times 10^{13}$ distinct vectors. Even
+under a severely restricted apex-gene formulation capping each weight at $[1, 6]$,
+the candidate space is $6^8 = 1{,}679{,}616$. Evaluating each candidate requires playing
+it against at least one opponent. Using the 20-game tournament protocol employed by the
+GA and a representative game duration of 20~seconds, the total sequential compute time is:
+\[
+  1{,}679{,}616 \times 20 \text{ games} \times 20 \text{ s/game}
+  \;\approx\; 672 \times 10^6 \text{ s}
+  \;\approx\; 21 \text{ years.}
+\]
+Parallelising across the 46 available AIRE cores reduces this to approximately 169~days,
+still far exceeding both the project timeline and the available HPC allocation. For the
+full $[0, 50]^8$ domain the figure is larger by a factor of $(51/6)^8 \approx 11{,}200$,
+rendering the problem cosmologically infeasible in any unparallelised regime.
+
+Beyond raw compute time, there is a deeper methodological objection: as discussed in
+\cref{GA testing}, a chromosome's fitness is inherently relative to the quality of its
+opponents~\cite{rosin1997new}. Evaluating each candidate against a fixed reference agent
+would require selecting that reference agent non-trivially, and a poorly chosen reference
+would inflate or deflate the fitness of entire candidate subspaces. The GA sidesteps this
+by co-evolving a diverse population, which constitutes the principled and
+well-established solution to the relative-fitness challenge in adversarial game
+playing~\cite{ficici2000game}.
+
+The brute-force analysis therefore confirms that the GA is not merely a pragmatic
+shortcut but the methodologically appropriate approach to this problem class, delivering a
+practical convergence in hours rather than centuries while managing the relative-fitness
+challenge inherent to game-theoretic parameter optimisation.
+
 
 
 
 
 \chapter{Benchmark Implementation}
+
+\section{Benchmarking Harnesses Variations}
+\label[appendix]{subsec:version_feature_benchmarking_variations}
+First, the version
+benchmark wraps each search call in Python orchestration code --- game-state management,
+move selection, and logging --- so the measured time includes Python overhead that the
+feature benchmark excludes by timing only the inner C minimax kernel. \\
+Second, the version
+benchmark accumulates nodes across all iterative-deepening passes (depths~1 through~$d$);
+the shallow passes contribute many rapid, low-node calls to the elapsed-time denominator
+while contributing relatively few nodes to the numerator, which suppresses the reported
+NPS.
+
+
 
 \end{appendices}

@@ -1,3 +1,4 @@
+% !TEX root = ../finalReport.tex
 \chapter{Implementation and Validation}
 \label{chapter3}
 \section{The High-Performance Game Engine (C/Cython)} \label{bitboard}
@@ -106,7 +107,7 @@ The engine capitalizes on this mathematical guarantee by combining two methods. 
 
 To optimize the Minimax search and handle the convergence of different move sequences into identical board states, a Transposition Table (TT) was implemented (\cref{back tt}). Because the Nonaga game state is compactly represented using a bitboard architecture (\cref{bitboard}), mapping it into a unique 64-bit "fingerprint" using Zobrist hashing is highly efficient. The process begins by initializing a table of pseudo-random 64-bit integers generated from a deterministic seed. Each potential feature of the game state (e.g., a red piece, black piece, or tile occupying a specific cell index) is assigned a unique random key. The global hash for a given position is then computed by applying the bitwise XOR operator to the keys of all present features. This approach is computationally efficient due to the order-independent property of XOR; the engine iterates through the bitboard’s seven 64-bit words, identifies set bits, and accumulates the corresponding keys without requiring expensive re-calculations.
 
-\subsection{Transposition Table Integration and Best Move Ordering}
+\subsection{Transposition Table Integration and Best Move Ordering} \label{tt integration}
 \subsubsection{Retrieval}
 During evaluation, the recursive \texttt{ai\_minimax\_piece} and \texttt{ai\_minimax\_tile} routines probe the TT before enumerating and expanding candidate nodes. Upon a hit, the engine extracts the cached depth, evaluation score, bounding flags (\texttt{EXACT}, \texttt{LOWER}, \texttt{UPPER}), and historical best moves, rigorously validating them against the current board to prevent hash collision errors. If a valid entry meets the required search depth, it triggers an immediate cutoff: either returning exact evaluations directly, or tightening the search window ($\alpha \geq \beta$) using bound resolutions.
 

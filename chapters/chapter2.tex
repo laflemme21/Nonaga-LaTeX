@@ -1,3 +1,4 @@
+% !TEX root = ../finalReport.tex
 
 \chapter{Methodology}
 \label{chapter2}
@@ -32,17 +33,9 @@ To systematically optimize the weights of these parameters, a Genetic Algorithm 
 
 A Random K-Opponent Tournament Scheduler was engineered, forcing genomes to compete against each other in self-play to determine their fitness. A unique challenge in optimizing heuristics for adversarial games is that fitness is entirely relative; a gene's performance is strictly dependent on the quality of its opponents. To mitigate this noise, the $K$ parameter (number of opponents) must be set as high as computationally acceptable to ensure a statistically significant fitness score. 
 
-It was recommended to benchmark the GA's convergence against an absolute "apex gene" found via brute-force search over a restricted domain (1--6 per parameter) \cite{assessor}. However, calculations revealed this to be unfeasible due to the estimated estimated time and heavily neighborhood-dependent nature of the fitness landscape (further detailed in \cref{brute force}).
+It was recommended to benchmark the GA's convergence against an absolute "apex gene" found via brute-force search over a restricted domain (1--6 per parameter) \cite{assessor}. However, calculations revealed this to be unfeasible due to the estimated execution time and heavily neighborhood-dependent nature of the fitness landscape (further detailed in \cref{sec:hpc_feasibility}).
 
-While advanced evolutionary strategies, specifically Linkage Learning, were proposed as a potential solution to this landscape dependency \cite{assessor}, their implementation was ultimately deemed out of scope. The core objective of the GA was to tune the evaluation function parameters to a highly performant standard, which the implemented baseline achieved successfully (As discussed in \cref{GA results}). For that reason, development resources were strategically reallocated to engine polishing and system optimization rather than over-engineering the evolutionary framework.n Tuning}
-\subsection{Evaluation of the Brute Force Approach} \label{brute force}
-A theoretical evaluation of the complete search space was conducted to assess the feasibility of a brute-force optimization approach. The state space consists of eight parameters. By drastically restricting the parameter domain from the interval $[0, 50]$ to $[1, 6]$, the total number of possible chromosomes is $6^8$. To limit the combinatorial explosion of games, it was assumed each chromosome plays only against a restricted subset of immediate neighbors (e.g., 16 games as the first player and 16 as the second). This bounds the total number of required game evaluations to approximately $\frac{6^8}{16}$. Assuming a sub-optimal Minimax search depth where each move requires one second and an average game lasts 20 moves, the sequential evaluation time is calculated as:
-\begin{equation}
-    T_{\mathrm{seq}} = \frac{6^8}{16} \times 20 \mbox{ seconds} \approx 24.3 \mbox{ days}
-\end{equation}
-When parallelized across 46 cores on the university's High-Performance Computing (HPC) cluster, the theoretical lower bound of execution time is approximately half a day. However, when factoring in the mandatory overhead for matchmaking, process scheduling, and aggregation across nodes, the realistic projection expanded to $2.5$ days. This substantial computational bottleneck strongly reaffirmed the necessity of the heuristic GA approach.
-
-However, the k-tournament evaluation introduces complexities related to neighborhood dependency. Because a chromosome's fitness is evaluated against a specific, dynamic subset of the population, the assigned fitness is highly relative.
+While advanced evolutionary strategies, specifically Linkage Learning, were proposed as a potential solution to this landscape dependency \cite{assessor}, their implementation was ultimately deemed out of scope. The core objective of the GA was to tune the evaluation function parameters to a highly performant standard, which the implemented baseline achieved successfully (As discussed in \cref{sec:ga_results}). For that reason, development resources were strategically reallocated to engine polishing and system optimization rather than over-engineering the evolutionary framework.
 
 
 

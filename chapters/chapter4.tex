@@ -1,3 +1,4 @@
+% !TEX root = ../finalReport.tex
 %% ============================================================
 %%  Chapter 4 — Results, Evaluation and Discussion
 %%  Nonaga-Online — COMP3931 Final Year Project
@@ -26,20 +27,20 @@ table disabled. This configuration isolates raw compute throughput by removing
 TT-initialisation variance and hit-rate variability.
 
 \begin{table}[ht]
-\centering
-\caption{Mean nodes-per-second (NPS): Legacy Python vs.\ Cython core, alpha-beta ON, transposition table OFF, initial board position, $n = 5$.
-Legacy figures are estimated from evaluation-function calls; Cython figures are exact C
-counters.}
-\label{tab:nps_comparison}
-\begin{tabular}{lrrr}
-\hline
-\textbf{Depth} & \textbf{Legacy NPS (est.)} & \textbf{Cython NPS (exact)} & \textbf{Speedup} \\
-\hline
-1 & 24{,}053  & 1{,}542{,}371 & $64\times$ \\
-2 & 16{,}341  & 1{,}443{,}758 & $88\times$ \\
-3 & 20{,}660  & 1{,}495{,}918 & $72\times$ \\
-\hline
-\end{tabular}
+  \centering
+  \caption{Mean nodes-per-second (NPS): Legacy Python vs.\ Cython core, alpha-beta ON, transposition table OFF, initial board position, $n = 5$.
+    Legacy figures are estimated from evaluation-function calls; Cython figures are exact C
+    counters.}
+  \label{tab:nps_comparison}
+  \begin{tabular}{lrrr}
+    \hline
+    \textbf{Depth} & \textbf{Legacy NPS (est.)} & \textbf{Cython NPS (exact)} & \textbf{Speedup} \\
+    \hline
+    1              & 24{,}053                   & 1{,}542{,}371               & $64\times$       \\
+    2              & 16{,}341                   & 1{,}443{,}758               & $88\times$       \\
+    3              & 20{,}660                   & 1{,}495{,}918               & $72\times$       \\
+    \hline
+  \end{tabular}
 \end{table}
 
 The Cython engine sustains 1.44--1.54 million NPS across depths~1--3, while the
@@ -66,7 +67,7 @@ pointer-chasing data structures~\cite{wingqvist2022dod,arantes2025impact}.
 
 
 \cref{tab:sps_comparison} presents the Searches per second (SPS) which is the number of full iterative-deepening sequence completed per second and mean wall-clock time per complete iterative deepening depth-$d$ search for both engines. A critical empirical observation is that the Legacy
-engine without alpha-beta pruning failed to complete a single depth-3 search within the
+engine failed to complete a single depth-3 search within the
 100-second timeout. This is consistent with the theoretical game-tree complexity:
 at a branching factor of~440 (\cref{branching}), exhaustive enumeration to depth~3
 produces approximately $440^3 \approx 85$ million leaf nodes, which at 20{,}000 estimated
@@ -74,25 +75,25 @@ NPS would require roughly 70 minutes. Even with alpha-beta enabled, Legacy Engin
 entirely infeasible.
 
 \begin{table}[ht]
-\centering
-\caption{SPS and mean wall-clock time per complete iterative-deepening
-call: Legacy Python vs.\ Cython core, alpha-beta ON, transposition table OFF,
-initial board position, $n = 5$.}
-\label{tab:sps_comparison}
-\begin{tabular}{lrrrr}
-\hline
-\textbf{Depth} & \textbf{Legacy SPS} & \textbf{Legacy s/search}
-              & \textbf{Cython SPS} & \textbf{Cython s/search} \\
-\hline
-1 & 45.03  & 0.022 & 2{,}451 & 0.0004 \\
-2 & 1.40   & 0.714 & 57.2    & 0.017  \\
-3 & timeout  & timeout  & 0.62   & 1.61   \\
-\hline
-\end{tabular}
+  \centering
+  \caption{SPS and mean wall-clock time per complete iterative-deepening
+    call: Legacy Python vs.\ Cython core, alpha-beta ON, transposition table OFF,
+    initial board position, $n = 5$.}
+  \label{tab:sps_comparison}
+  \begin{tabular}{lrrrr}
+    \hline
+    \textbf{Depth} & \textbf{Legacy SPS} & \textbf{Legacy s/search}
+                   & \textbf{Cython SPS} & \textbf{Cython s/search}                    \\
+    \hline
+    1              & 45.03               & 0.022                    & 2{,}451 & 0.0004 \\
+    2              & 1.40                & 0.714                    & 57.2    & 0.017  \\
+    3              & timeout             & timeout                  & 0.08    & 12.4   \\
+    \hline
+  \end{tabular}
 \end{table}
 
 The Cython engine, by contrast, completes a depth-1 search in under half a millisecond
-and a depth-3 search in less than 2~seconds without the transposition table.
+and a depth-3 search in less than 13~seconds without the transposition table.
 \cref{sec:tt_effectiveness} demonstrates how the transposition table reduces this
 to under one second in steady-state play.
 
@@ -107,7 +108,7 @@ the inner minimax kernel entirely to compiled C.
 
 
 %% ------------------------------------------------------------
-\section{AI Search Performance}
+\section{Final AI Search Performance}
 \label{sec:search_perf}
 
 This section evaluates the effectiveness of alpha-beta pruning and the transposition table
@@ -115,8 +116,7 @@ This section evaluates the effectiveness of alpha-beta pruning and the transposi
 mid-game fixture position, which presents a denser transposition profile and more
 representative conditions for actual gameplay than the initial position.
 
-\subsection{Alpha-Beta Pruning Effectiveness}
-\label{sec:ab_effectiveness}
+\subsection{Minimax Enhancements Effectiveness}
 
 \cref{tab:ab_pruning} records the nodes evaluated per single depth-3 search and the
 corresponding wall-clock time, under three configurations: no pruning, alpha-beta alone,
@@ -125,38 +125,41 @@ take approximately 49~seconds, this benchmark ran with a 300-second safety timeo
 five samples completed without interruption.
 
 \begin{table}[ht]
-\centering
-\caption{Nodes per single depth-3 search and mean wall-clock time per search by pruning
-configuration, Cython core engine, mid-game fixture position, $n = 5$.
-Reduction factors are relative to the no-pruning baseline.
-AB+TT figures represent steady-state throughput with a warm transposition table.}
-\label{tab:ab_pruning}
-\begin{tabular}{llrrrr}
-\hline
-\textbf{AB} & \textbf{TT} & \textbf{Nodes/search} & \textbf{s/search}
-             & \textbf{Node reduction} & \textbf{Time reduction} \\
-\hline
-Off & Off & 82{,}262{,}629 & 49.0 & $1.0\times$     & $1.0\times$    \\
-On  & Off & 21{,}460{,}422 & 12.8 & $3.8\times$     & $3.8\times$    \\
-On  & On  & ${\approx}1{,}147{,}000$ & ${\approx}0.73$ & ${\approx}72\times$ & ${\approx}67\times$ \\
-\hline
-\end{tabular}
+  \centering
+  \caption{Nodes per single depth-3 search and mean wall-clock time per search by pruning
+    configuration, Cython core engine, mid-game fixture position, $n = 5$.
+    Reduction factors are relative to the no-pruning baseline.
+    AB+TT figures represent steady-state throughput with a warm transposition table.}
+  \label{tab:ab_pruning}
+  \begin{tabular}{llrrrr}
+    \hline
+    \textbf{AB} & \textbf{TT}             & \textbf{Nodes/search}    & \textbf{s/search}
+                & \textbf{Node reduction} & \textbf{Time reduction}                                                                  \\
+    \hline
+    Off         & Off                     & 82{,}262{,}629           & 49.0              & $1.0\times$         & $1.0\times$         \\
+    On          & Off                     & 21{,}460{,}422           & 12.8              & $3.8\times$         & $3.8\times$         \\
+    On          & On                      & ${\approx}1{,}147{,}000$ & ${\approx}0.73$   & ${\approx}72\times$ & ${\approx}67\times$ \\
+    \hline
+  \end{tabular}
 \end{table}
 
 \begin{figure}[ht]
-\centering
-%%  PLOT B — replace with \includegraphics once generated
-%%  Horizontal bar chart (logarithmic x-axis)
-%%  Title: "Nodes per Depth-3 Search by Pruning Configuration"
-%%  x-axis: Nodes per search (log scale)
-%%  y-axis: Configuration label
-%%  Bars (left to right): No pruning: 82262629 | AB only: 21460422 | AB+TT: 1147000
-\fbox{\parbox{0.85\textwidth}{\centering\vspace{2cm}
-[\cref{fig:pruning_nodes}: horizontal log bar chart --- Nodes per depth-3 search by configuration]\vspace{2cm}}}
-\caption{Nodes evaluated per depth-3 search under three pruning configurations. Note
-the logarithmic scale.}
-\label{fig:pruning_nodes}
+  \centering
+  %%  PLOT B — replace with \includegraphics once generated
+  %%  Horizontal bar chart (logarithmic x-axis)
+  %%  Title: "Nodes per Depth-3 Search by Pruning Configuration"
+  %%  x-axis: Nodes per search (log scale)
+  %%  y-axis: Configuration label
+  %%  Bars (left to right): No pruning: 82262629 | AB only: 21460422 | AB+TT: 1147000
+  \fbox{\parbox{0.85\textwidth}{\centering\vspace{2cm}
+      [\cref{fig:pruning_nodes}: horizontal log bar chart --- Nodes per depth-3 search by configuration]\vspace{2cm}}}
+  \caption{Nodes evaluated per depth-3 search under three pruning configurations. Note
+    the logarithmic scale.}
+  \label{fig:pruning_nodes}
 \end{figure}
+\subsubsection{Alpha-Beta Pruning}
+\label{sec:ab_effectiveness}
+
 
 Alpha-beta pruning alone reduces the per-search node count from 82.3 million to 21.5
 million, a factor of $3.8\times$. As established in \cref{chapter1},
@@ -167,19 +170,18 @@ exceptionally high branching factor producing a broad, flat position landscape a
 shallow depths: many moves receive similar evaluation scores, so the alpha-beta window
 is poorly constrained and cutoffs are less frequent than in narrower games.
 
-\subsection{Transposition Table Effectiveness}
+\subsubsection{Transposition Table Effectiveness}
 \label{sec:tt_effectiveness}
 
 The most significant performance contribution comes from the transposition table operating
-in concert with iterative deepening, as described in \cref{imp zobrist}. After the
+in concert with iterative deepening, as described in \cref{tt integration}. After the
 TT is populated by the shallower passes (depths~1 and~2), the hash-move heuristic places
 the cached best move at the front of the child list for the depth-3 pass, substantially
 improving alpha-beta cutoff rates. The result is a further reduction from 21.5 million
-nodes (alpha-beta only) to approximately 1.15 million nodes per depth-3 search --- a
-a $19\times$ additional reduction attributable solely to the TT --- and a total
+nodes (alpha-beta only) to approximately 1.15 million nodes per depth-3 search, a $19\times$ additional reduction attributable solely to the TT, and a total
 reduction of ${\approx}72\times$ relative to brute force. The corresponding
 wall-clock time falls from 49~seconds to approximately 0.73~seconds, transforming depth-3
-search from a computationally impractical operation into one viable for real-time
+search from a computationally intractable operation into one viable for real-time
 interactive play.
 
 A secondary effect is a slight decrease in raw NPS when the TT is enabled: 1.38~MNPS
@@ -198,86 +200,86 @@ node range at 8{,}000--10{,}000~NPS once the table is populated.
 \label{sec:tt_hitrate}
 
 The two previous subsections characterised pruning effectiveness at the node-count level.
-To complement this, a dedicated TT-metrics benchmark was executed against the production
-engine~(\texttt{7a7b534}), which extends the version-benchmark harness to expose per-call
-TT counters: probe count, hit count broken down by bound type~(\texttt{EXACT},
-\texttt{LOWER}, \texttt{UPPER}), and the number of times the hash-move was both tried and
+To complement this, a dedicated TT-metrics benchmark was executed against a later engine build (\texttt{7a7b534}) instrumented to expose TT statistics counters, which extends the version-benchmark harness to expose per-call
+TT counters: probe count, hit count broken down by bound type: \texttt{EXACT},
+\texttt{LOWER}, \texttt{UPPER} (E/L/U) and the number of times the hash-move was both tried and
 provoked an immediate cutoff. \cref{tab:tt_stats} reports the aggregate statistics
 across both fixture positions at depths~1--3.
 
 \begin{table}[ht]
-\centering
-\caption{Transposition table statistics per depth: mean probes, mean hits, overall hit
-rate, bound-type breakdown, and hash-move cutoff rate. Commit~\texttt{7a7b534},
-production engine, both fixture positions combined, $n = 5$ samples per depth.
-\texttt{saved\_board\_backup.json} had a fully warm TT at all depths due to prior
-\texttt{saved\_board.json} runs; cold-TT values in the final column are drawn from
-sample~0 of \texttt{saved\_board.json} only.}
-\label{tab:tt_stats}
-\begin{tabular}{lrrrrrr}
-\hline
-\textbf{Depth}
-  & \textbf{Mean probes}
-  & \textbf{Mean hits}
-  & \textbf{Hit rate}
-  & \textbf{Exact / Lower / Upper}
-  & \textbf{Hash-move cutoff rate}
-  & \textbf{Cold hit rate\textsuperscript{*}} \\
-\hline
-1 & 17{,}750 & 17{,}748 & 99.99\% & 100\,/\,0\,/\,0\% & --- & 99.98\% \\
-2 & 31{,}629 & 31{,}176 & 98.57\% & ${\approx}$100\,/\,0\,/\,0\% & --- & 91.8\% \\
-3 & 52{,}565 & 48{,}418 & 92.1\%  & 97.3\,/\,2.4\,/\,0.01\% & 63.9\% & 70.4\% \\
-\hline
-\multicolumn{7}{l}{\textsuperscript{*} Sample~0 of \texttt{saved\_board.json} only
-(cold transposition table).}
-\end{tabular}
+  \centering
+  \caption{Transposition table statistics per depth: mean probes, mean hits, overall hit
+    rate (HR), bound-type breakdown, and hash-move cutoff rate (HMCR). Commit~\texttt{7a7b534},
+    both fixture positions combined, $n = 5$ samples per depth.
+    \texttt{saved\_board\_backup.json} had a fully warm TT at all depths due to prior
+    \texttt{saved\_board.json} runs; cold-TT values in the final column are drawn from
+    sample~0 of \texttt{saved\_board.json} only.}
+  \label{tab:tt_stats}
+  \begin{tabular}{lrrrrrr}
+    \hline
+    \textbf{D}
+      & \textbf{Mean probes}
+      & \textbf{Mean hits}
+      & \textbf{HR}
+      & \textbf{E/L/U}
+      & \textbf{HMCR}
+      & \textbf{Cold HR\textsuperscript{*}}                                                                        \\
+    \hline
+    1 & 17{,}750                                  & 17{,}748 & 99.99\% & 100\,/\,0\,/\,0\%            & ---    & 99.98\% \\
+    2 & 31{,}629                                  & 31{,}176 & 98.57\% & ${\approx}$100\,/\,0\,/\,0\% & ---    & 91.8\%  \\
+    3 & 52{,}565                                  & 48{,}418 & 92.1\%  & 97.3\,/\,2.4\,/\,0.01\%      & 63.9\% & 70.4\%  \\
+    \hline
+    \multicolumn{7}{l}{\textsuperscript{*} Sample~0 of \texttt{saved\_board.json} only
+      (cold transposition table).}
+  \end{tabular}
 \end{table}
 
 \begin{figure}[ht]
-\centering
-%%  PLOT D — replace with \includegraphics once generated
-%%  Grouped bar chart
-%%  Title: "TT Hit Rate by Depth: Cold vs.\ Warm Cache"
-%%  x-axis: Depth (1, 2, 3)
-%%  y-axis: Hit rate (%)
-%%  Two groups per depth:
-%%    Cold (sample 0, saved_board.json): [99.98, 91.8, 70.4]
-%%    Warm (steady state):               [100.0, 100.0, 100.0]
-\fbox{\parbox{0.85\textwidth}{\centering\vspace{2cm}
-[\cref{fig:tt_hitrate}: grouped bar chart --- TT hit rate, cold vs.\ warm, by depth]\vspace{2cm}}}
-\caption{Transposition table hit rate by depth under cold (first call) and warm
-(steady-state) conditions. The warm series remains at 100\% across all depths.}
-\label{fig:tt_hitrate}
+  \centering
+  %%  PLOT D — replace with \includegraphics once generated
+  %%  Grouped bar chart
+  %%  Title: "TT Hit Rate by Depth: Cold vs.\ Warm Cache"
+  %%  x-axis: Depth (1, 2, 3)
+  %%  y-axis: Hit rate (%)
+  %%  Two groups per depth:
+  %%    Cold (sample 0, saved_board.json): [99.98, 91.8, 70.4]
+  %%    Warm (steady state):               [100.0, 100.0, 100.0]
+  \fbox{\parbox{0.85\textwidth}{\centering\vspace{2cm}
+      [\cref{fig:tt_hitrate}: grouped bar chart --- TT hit rate, cold vs.\ warm, by depth]\vspace{2cm}}}
+  \caption{Transposition table hit rate by depth under cold (first call) and warm
+    (steady-state) conditions. The warm series remains at 100\% across all depths.}
+  \label{fig:tt_hitrate}
 \end{figure}
 
 \begin{figure}[ht]
-\centering
-%%  PLOT E — replace with \includegraphics once generated
-%%  Stacked bar chart (or 100% stacked)
-%%  Title: "TT Hit Bound-Type Breakdown at Depth 3"
-%%  Three stacked segments per sample (saved_board.json, sample 0 only):
-%%    EXACT: 42693   (61.0% of probes)
-%%    LOWER: 5784    (8.3% of probes)
-%%    UPPER: 22      (0.03% of probes)
-%%    MISS:  21494   (30.7% of probes)
-%%  Alternatively: a single-bar 100% stacked chart showing the four categories
-%%  Categories: [EXACT hit, LOWER hit, UPPER hit, Miss]
-%%  Values (%): [61.0, 8.3, 0.03, 30.7]
-\fbox{\parbox{0.85\textwidth}{\centering\vspace{2cm}
-[\cref{fig:tt_bounds}: stacked bar --- TT probe outcome breakdown at depth 3,
-cold call]\vspace{2cm}}}
-\caption{Breakdown of transposition table probe outcomes during the cold depth-3 search
-on \texttt{saved\_board.json}~(sample~0): \texttt{EXACT} hits enable immediate
-cutoffs, \texttt{LOWER}/\texttt{UPPER} hits tighten the $\alpha$/$\beta$ window,
-and misses proceed to full subtree expansion.}
-\label{fig:tt_bounds}
+  \centering
+  %%  PLOT E — replace with \includegraphics once generated
+  %%  Stacked bar chart (or 100% stacked)
+  %%  Title: "TT Hit Bound-Type Breakdown at Depth 3"
+  %%  Three stacked segments per sample (saved_board.json, sample 0 only):
+  %%    EXACT: 42693   (61.0% of probes)
+  %%    LOWER: 5784    (8.3% of probes)
+  %%    UPPER: 22      (0.03% of probes)
+  %%    MISS:  21494   (30.7% of probes)
+  %%  Alternatively: a single-bar 100% stacked chart showing the four categories
+  %%  Categories: [EXACT hit, LOWER hit, UPPER hit, Miss]
+  %%  Values (%): [61.0, 8.3, 0.03, 30.7]
+  \fbox{\parbox{0.85\textwidth}{\centering\vspace{2cm}
+      [\cref{fig:tt_bounds}: stacked bar --- TT probe outcome breakdown at depth 3,
+        cold call]\vspace{2cm}}}
+  \caption{Breakdown of transposition table probe outcomes during the cold depth-3 search
+    on \texttt{saved\_board.json}~(sample~0): \texttt{EXACT} hits enable immediate
+    cutoffs, \texttt{LOWER}/\texttt{UPPER} hits tighten the $\alpha$/$\beta$ window,
+    and misses proceed to full subtree expansion.}
+  \label{fig:tt_bounds}
 \end{figure}
 
-Several observations follow directly from \cref{tab:tt_stats}. First, the hit rate
-under warm conditions reaches 100\% at all depths. This means that in steady-state
+Several observations follow directly from \cref{tab:tt_stats}.\\ 
+First, the hit rate
+under warm conditions is above 90\% at all depths. This means that in steady-state
 play, every position the engine encounters has already been evaluated and cached; the
 minimax kernel reduces to a sequence of hash-table lookups with no subtree expansion,
-which explains the very low steady-state node counts observed in \cref{tab:version_bench}.
+which explains the very low steady-state node counts observed in \cref{tab:version_bench}.\\
 Second, the cold-start hit rate degrades sharply with depth: 99.98\% at depth~1, falling
 to 91.8\% at depth~2 and 70.4\% at depth~3. This reflects the well-established
 iterative-deepening reuse property~\cite{slate1977chess}: the depth-1 pass fills the TT
@@ -290,8 +292,9 @@ Third, at depth~3 the \texttt{EXACT} bound accounts for 97.3\% of all hits, with
 \texttt{LOWER} bounds comprising 2.4\% and \texttt{UPPER} bounds less than 0.01\%. The
 dominance of \texttt{EXACT} hits indicates that the TT mostly returns complete, definitive
 evaluations rather than partial window bounds, which is the strongest possible form of TT
-reuse as it permits an immediate return without any further search. Fourth, the
-hash-move cutoff rate of 63.9\% at depth~3 quantifies the move-ordering
+reuse as it permits an immediate return without any further search.\\ 
+Fourth, the
+hash-move cutoff rate (HMCR) of 63.9\% at depth~3 quantifies the move-ordering
 contribution of the TT directly: when the hash-move is placed first in the child list, it
 triggers an alpha-beta cutoff in nearly two out of three cases, which is the primary
 mechanism by which TT and alpha-beta synergise to produce the ${\approx}72\times$ total
@@ -300,63 +303,56 @@ node reduction reported in \cref{sec:ab_effectiveness}.
 \subsection{Combined Optimisation: Final Engine Throughput}
 \label{sec:final_engine}
 
-\cref{tab:version_bench} reports the NPS and mean nodes evaluated by the production
+\cref{tab:version_bench} reports the NPS and mean nodes evaluated by the final
 engine (\texttt{8901593}) with both alpha-beta and the transposition table enabled,
 across two saved fixture positions at depths~1--3.
 
 \begin{table}[ht]
-\centering
-\caption{Final engine (\texttt{8901593}) throughput: NPS and mean evaluated nodes per
-depth, version benchmark, $n = 5$ samples per fixture. Median NPS is reported alongside
-the mean at depths~2--3 due to cold-TT outlier variance in the first sample.}
-\label{tab:version_bench}
-\begin{tabular}{llrrr}
-\hline
-\textbf{Fixture} & \textbf{Depth} & \textbf{Mean NPS} & \textbf{Median NPS} & \textbf{Mean nodes} \\
-\hline
-\texttt{saved\_board.json}        & 1 & 2{,}850  & 2{,}801  & 17{,}100  \\
-                                   & 2 & 9{,}708  & 5{,}915  & 58{,}252  \\
-                                   & 3 & 28{,}857 & 8{,}496  & 173{,}155 \\
-\hline
-\texttt{saved\_board\_backup.json} & 1 & 2{,}633  & 2{,}580  & 15{,}799  \\
-                                   & 2 & 5{,}660  & 5{,}557  & 33{,}962  \\
-                                   & 3 & 8{,}958  & 8{,}524  & 53{,}749  \\
-\hline
-\end{tabular}
+  \centering
+  \caption{Final engine (Commit \texttt{8901593}) throughput: NPS and mean evaluated nodes per
+    depth, version benchmark, $n = 5$ samples per fixture. Median NPS is reported alongside
+    the mean at depths~2--3 due to cold-TT outlier variance in the first sample.}
+  \label{tab:version_bench}
+  \begin{tabular}{llrrr}
+    \hline
+    \textbf{Fixture}                   & \textbf{Depth} & \textbf{Mean NPS} & \textbf{Median NPS} & \textbf{Mean nodes} \\
+    \hline
+    \texttt{saved\_board.json} (cold)        & 1              & 2{,}850           & 2{,}801             & 17{,}100            \\
+                                       & 2              & 9{,}708           & 5{,}915             & 58{,}252            \\
+                                       & 3              & 28{,}857          & 8{,}496             & 173{,}155           \\
+    \hline
+    \texttt{saved\_board\_backup.json} (hot) & 1              & 2{,}633           & 2{,}580             & 15{,}799            \\
+                                       & 2              & 5{,}660           & 5{,}557             & 33{,}962            \\
+                                       & 3              & 8{,}958           & 8{,}524             & 53{,}749            \\
+    \hline
+  \end{tabular}
 \end{table}
 
 \begin{figure}[ht]
-\centering
-%%  PLOT C — replace with \includegraphics once generated
-%%  Line chart
-%%  Title: "Final Engine Median NPS vs.\ Search Depth"
-%%  x-axis: Depth (1, 2, 3)
-%%  y-axis: Median NPS
-%%  Line 1 (saved_board.json):        [2801, 5915, 8496]
-%%  Line 2 (saved_board_backup.json): [2580, 5557, 8524]
-\fbox{\parbox{0.85\textwidth}{\centering\vspace{2cm}
-[\cref{fig:version_bench}: line chart --- Final engine median NPS vs.\ depth]\vspace{2cm}}}
-\caption{Final engine (\texttt{8901593}) median NPS vs.\ search depth for two mid-game
-fixture positions, $n = 5$.}
-\label{fig:version_bench}
+  \centering
+  %%  PLOT C — replace with \includegraphics once generated
+  %%  Line chart
+  %%  Title: "Final Engine Median NPS vs.\ Search Depth"
+  %%  x-axis: Depth (1, 2, 3)
+  %%  y-axis: Median NPS
+  %%  Line 1 (saved_board.json):        [2801, 5915, 8496]
+  %%  Line 2 (saved_board_backup.json): [2580, 5557, 8524]
+  \fbox{\parbox{0.85\textwidth}{\centering\vspace{2cm}
+      [\cref{fig:version_bench}: line chart --- Final engine median NPS vs.\ depth]\vspace{2cm}}}
+  \caption{Final engine (Commit \texttt{8901593}) median NPS vs.\ search depth for two mid-game
+    fixture positions, $n = 5$.}
+  \label{fig:version_bench}
 \end{figure}
 
-The version-benchmark NPS figures (2{,}600--28{,}800 depending on depth and TT warmth)
-are considerably lower than the feature-benchmark figures (${\approx}1.5$~MNPS). This
-gap arises from two structural differences between the two harnesses. First, the version
-benchmark wraps each search call in Python orchestration code --- game-state management,
-move selection, and logging --- so the measured time includes Python overhead that the
-feature benchmark excludes by timing only the inner C minimax kernel. Second, the version
-benchmark accumulates nodes across all iterative-deepening passes (depths~1 through~$d$);
-the shallow passes contribute many rapid, low-node calls to the elapsed-time denominator
-while contributing relatively few nodes to the numerator, which suppresses the reported
-NPS.
+The NPS figures (2{,}600--28{,}800 depending on depth and TT warmth) in \cref{tab:version_bench}
+are considerably lower than the figures mentionned in \cref{sec:tt_effectiveness} (${\approx}1.5$~MNPS). This
+gap arises from two implementation differences between the two harnesses. (Discussed in more detail in \cref{subsec:version_feature_benchmarking_variations}):
 
-Despite the lower absolute figures, the results confirm the engine meets its latency
-target. At depth~3, a steady-state search visits approximately 50{,}000--60{,}000 nodes
-across both fixtures; at the processing rate measured by the version harness, this
-translates to a typical decision latency of under seven seconds --- the target established
-in Section~2.5.
+
+
+Despite the lower absolute figures relative to the feature harness, the NPS values
+confirm that the engine sustains adequate throughput under full Python orchestration,
+with empirical gameplay confirming depth-3 decisions consistently within 1--2 seconds.
 
 \subsection{Discussion}
 
@@ -414,70 +410,30 @@ $w = [35, 14, 40, 20, 35, 40, 39, 34]$, stored in \texttt{parameters.json}.
 GA metrics for all completed stages are logged in \texttt{ga\_metrics.csv} and
 \texttt{ga\_metrics\_stage\_1-4.csv}.
 
-
-%% ------------------------------------------------------------
-\section{Brute-Force Feasibility Analysis}
-\label{sec:hpc_feasibility}
-
-A suggestion raised during the assessor meeting~\cite{assessor} was to evaluate whether
-exhaustive enumeration of the evaluation-function weight space, potentially parallelised
-on the University of Leeds AIRE HPC cluster, could have served as a viable alternative to
-the GA. This section quantifies the infeasibility of that approach.
-
-The evaluation function is parameterised by eight integer weights $w_i \in [0, 50]$,
-yielding a search space of $51^8 \approx 1.885 \times 10^{13}$ distinct vectors. Even
-under a severely restricted apex-gene formulation capping each weight at $[1, 6]$,
-the candidate space is $6^8 = 1{,}679{,}616$. Evaluating each candidate requires playing
-it against at least one opponent. Using the 20-game tournament protocol employed by the
-GA and a representative game duration of 20~seconds, the total sequential compute time is:
-\[
-1{,}679{,}616 \times 20 \text{ games} \times 20 \text{ s/game}
-\;\approx\; 672 \times 10^6 \text{ s}
-\;\approx\; 21 \text{ years.}
-\]
-Parallelising across the 46 available AIRE cores reduces this to approximately 169~days,
-still far exceeding both the project timeline and the available HPC allocation. For the
-full $[0, 50]^8$ domain the figure is larger by a factor of $(51/6)^8 \approx 11{,}200$,
-rendering the problem cosmologically infeasible in any unparallelised regime.
-
-Beyond raw compute time, there is a deeper methodological objection: as discussed in
-\cref{GA testing}, a chromosome's fitness is inherently relative to the quality of its
-opponents~\cite{rosin1997new}. Evaluating each candidate against a fixed reference agent
-would require selecting that reference agent non-trivially, and a poorly chosen reference
-would inflate or deflate the fitness of entire candidate subspaces. The GA sidesteps this
-by co-evolving a diverse population, which constitutes the principled and
-well-established solution to the relative-fitness challenge in adversarial game
-playing~\cite{ficici2000game}.
-
-The brute-force analysis therefore confirms that the GA is not merely a pragmatic
-shortcut but the methodologically appropriate approach to this problem class, delivering a
-practical convergence in hours rather than centuries while managing the relative-fitness
-challenge inherent to game-theoretic parameter optimisation.
-
-
-%% ------------------------------------------------------------
-\section{Chapter Summary}
+\section{Evaluation Summary}
 \label{sec:ch4_summary}
 
 The C/Cython bitboard engine sustains 1.44--1.54 million NPS in raw processing rate,
-a $64$--$88\times$ improvement over the legacy pure-Python implementation, validating
-the decision to implement a custom hexagonal bitboard from first
-principles~\cite{browne2014bitboards}. Because both engines execute the same algorithm
-at a given depth, this speedup in processing rate translates directly to an equivalent
-reduction in decision latency: the legacy engine required 15.9~seconds per depth-3
-search; the Cython engine reduces this to approximately 11~seconds even without any
-caching.
+a $64$--$88\times$ improvement over the legacy pure-Python implementation
+(\cref{sec:engine_migration}), validating the decision to implement a custom hexagonal
+bitboard from first principles~\cite{browne2014bitboards}. Because both engines execute
+the same algorithm at a given depth, this speedup in processing rate translates directly
+to an equivalent reduction in decision latency: the legacy engine required more than
+100 seconds per depth-3 search; the Cython engine reduces this to approximately
+12~seconds even without any caching (\cref{sec:engine_migration}).
 
 Alpha-beta pruning reduces the depth-3 node count by a factor of $3.8\times$ relative
-to brute force. The transposition table, operating synergistically with iterative
-deepening, contributes a further $19\times$ reduction in nodes visited per search
-through the hash-move mechanism, yielding a combined ${\approx}72\times$ total
-reduction. In practice, this converts a 49-second depth-3 decision into a sub-second
-one under warm-cache conditions, enabling real-time gameplay at depth~3.
+to brute force (\cref{sec:ab_effectiveness}). The transposition table, operating
+synergistically with iterative deepening, contributes a further $19\times$ reduction
+in nodes visited per search through the hash-move mechanism (\cref{sec:tt_effectiveness}),
+yielding a combined ${\approx}72\times$ total reduction. In practice, this converts a
+49-second depth-3 decision into a sub-second one under warm-cache conditions
+(\cref{sec:tt_effectiveness}), enabling real-time gameplay at depth~3.
 
 Brute-force enumeration of the evaluation-function weight space is demonstrated to be
-computationally infeasible at any realistic scope, with even a severely restricted
-domain requiring approximately 169~days on 46-core HPC hardware. The GA results,
-including convergence curves and tournament validation of the evolved weight vector
-$w = [35, 14, 40, 20, 35, 40, 39, 34]$ against the benchmark pool described in
-Section~3.4.3, will complete this chapter once the current benchmark run concludes.
+computationally infeasible at any realistic scope (\cref{brute force}), with even a
+severely restricted domain requiring approximately 169~days on 46-core HPC hardware.
+The GA results, including convergence curves and tournament validation of the evolved
+weight vector $w = [35, 14, 40, 20, 35, 40, 39, 34]$ against the benchmark pool
+described in \cref{GA testing}, will complete this chapter once the current benchmark
+run concludes.
