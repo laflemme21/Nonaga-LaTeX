@@ -42,6 +42,11 @@ C.~Browne.
 \newblock Bitboard methods for games.
 \newblock {\em ICGA Journal}, 37(2):67--84, 2014.
 
+\bibitem{8848436}
+T.~By.
+\newblock Hexagonal grid numbering.
+\newblock {\em IEEE Transactions on Games}, 13(2):138--145, 2021.
+
 \bibitem{SA2020survey}
 F.~F. Duarte, N.~Lau, A.~Pereira, and L.~P. Reis.
 \newblock A survey of planning and learning in games.
@@ -57,16 +62,42 @@ D.~E. Goldberg.
 \newblock {\em Genetic Algorithms in Search, Optimization, and Machine Learning}.
 \newblock Addison-Wesley, 1989.
 
+\bibitem{hornik1989multilayer}
+K.~Hornik, M.~Stinchcombe, and H.~White.
+\newblock Multilayer feedforward networks are universal approximators.
+\newblock {\em Neural Networks}, 2(5):359--366, 1989.
+
+\bibitem{hyatt1999rotated}
+R.~M. Hyatt.
+\newblock Rotated bitmaps, a new twist on an old idea.
+\newblock {\em ICCA Journal}, 22(4):213--222, 1999.
+
 \bibitem{assessor}
 L.~S. Indrusiak.
 \newblock Assessor progress meeting discussion.
 \newblock Personal communication, March 13 2026.
 \newblock COMP3931 Individual Project Assessor Meeting, University of Leeds.
 
+\bibitem{nonaga_demo_2026}
+K.~S. Kassis.
+\newblock Nonaga two player demo.
+\newblock YouTube, 2026.
+\newblock Available at: \url{https://youtu.be/TNKhGIifFq4}. Accessed: May 12, 2026.
+
 \bibitem{Katoch2021}
 S.~Katoch, S.~S. Chauhan, and V.~Kumar.
 \newblock A review on genetic algorithm: past, present, and future.
 \newblock {\em Multimedia Tools and Applications}, 80(5):8091--8126, Feb 2021.
+
+\bibitem{kirkpatrick1983optimization}
+S.~Kirkpatrick, C.~D. Gelatt, and M.~P. Vecchi.
+\newblock Optimization by simulated annealing.
+\newblock {\em Science}, 220(4598):671--680, 1983.
+
+\bibitem{knuth1975analysis}
+D.~E. Knuth and R.~W. Moore.
+\newblock An analysis of alpha-beta pruning.
+\newblock {\em Artificial Intelligence}, 6(4):293--326, 1975.
 
 \bibitem{Go_Paper}
 S.~Mohandas and M.~A. Nizar.
@@ -86,6 +117,12 @@ H.~L. Nelson.
 \bibitem{newman2006use}
 D.~R. Newman.
 \newblock The use of linkage learning in genetic algorithms, 2006.
+
+\bibitem{patel2013hexagons}
+A.~Patel.
+\newblock Hexagonal grids.
+\newblock \url{https://www.redblobgames.com/grids/hexagons/}, 2013.
+\newblock Accessed: 2026-04-10.
 
 \bibitem{pelikan1999boa}
 M.~Pelikan, D.~E. Goldberg, and E.~Cant{\'u}-Paz.
@@ -126,6 +163,11 @@ P.~S. Segundo, R.~Galan, F.~Matia, D.~Rodriguez-Losada, and A.~Jimenez.
 C.~E. Shannon.
 \newblock Programming a computer for playing chess.
 \newblock {\em The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science}, 41(314):256--275, 1950.
+
+\bibitem{shukla2015comparative}
+A.~Shukla, H.~M. Pandey, and D.~Mehrotra.
+\newblock Comparative review of selection techniques in genetic algorithm.
+\newblock In {\em 2015 international conference on futuristic trends on computational analysis and knowledge management (ABLAZE)}, pages 515--519. IEEE, 2015.
 
 \bibitem{silver2018general}
 D.~Silver, T.~Hubert, J.~Schrittwieser, I.~Antonoglou, M.~Lai, A.~Guez, M.~Lanctot, L.~Sifre, D.~Kumaran, T.~Graepel, et~al.

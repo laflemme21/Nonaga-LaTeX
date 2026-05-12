@@ -1,0 +1,27 @@
+INFO:  latexindent.exe version 4.0.1, 2026-05-04, a script to indent .tex files
+       latexindent.exe lives here: C:/texlive/2026/bin/windows/
+       Mon May 11 20:52:52 2026
+       Filename: c:/Users/carlk/Documents/GitHub/Nonaga-LaTeX/chapters/__latexindent_temp_chapter3.tex
+INFO:  Processing switches:
+       -y|--yaml: YAML settings specified via command line
+       -c|--cruft: cruft directory
+INFO:  Directory for backup files and log file c:\Users\carlk\Documents\GitHub\Nonaga-LaTeX\indent.log:
+       c:\Users\carlk\Documents\GitHub\Nonaga-LaTeX\
+INFO:  YAML settings read: defaultSettings.yaml
+       Reading defaultSettings.yaml from C:/texlive/2026/bin/windows/defaultSettings.yaml
+       Reading defaultSettings.yaml (2nd attempt) from C:/texlive/2026/bin/windows/../../texmf-dist/scripts/latexindent/defaultSettings.yaml
+       and then, if necessary, C:/texlive/2026/bin/windows/LatexIndent/defaultSettings.yaml
+INFO:  YAML reading settings
+       Home directory is C:\Users\carlk
+       latexindent.pl didn't find indentconfig.yaml or .indentconfig.yaml
+       see all possible locations: https://latexindentpl.readthedocs.io/en/latest/sec-appendices.html#indentconfig-options
+INFO:  YAML settings read: -y switch
+       YAML setting: defaultIndent:'  '
+       single-quoted string found in -y switch: '  ', substitute to   
+       Updating mainSetting with defaultIndent:   
+INFO:  Output routine:
+       Not outputting to file; see -w and -o switches for more options.
+       --------------
+INFO:  Please direct all communication/issues to:
+       https://github.com/cmhughes/latexindent.pl
+       documentation: https://latexindentpl.readthedocs.io/en/latest/

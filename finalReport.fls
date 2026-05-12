@@ -210,6 +210,8 @@ INPUT c:/texlive/2026/texmf-dist/tex/latex/amsmath/amsbsy.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/amsmath/amsopn.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/booktabs/booktabs.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/booktabs/booktabs.sty
+INPUT c:/texlive/2026/texmf-dist/tex/latex/placeins/placeins.sty
+INPUT c:/texlive/2026/texmf-dist/tex/latex/placeins/placeins.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/hyperref/hyperref.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/hyperref/hyperref.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
@@ -363,12 +365,43 @@ INPUT ./chapters/chapter1.tex
 INPUT ./chapters/chapter1.tex
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ecrm1440.tfm
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ecrm1200.tfm
+INPUT ./pictures/Nonaga_intro/line win.png
+INPUT ./pictures/Nonaga_intro/line win.png
+INPUT ./pictures/Nonaga_intro/line win.png
+INPUT ./pictures/Nonaga_intro/line win.png
+INPUT ./pictures/Nonaga_intro/line win.png
+INPUT c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm
+INPUT ./pictures/Nonaga_intro/triangle win.png
+INPUT ./pictures/Nonaga_intro/triangle win.png
+INPUT ./pictures/Nonaga_intro/triangle win.png
+INPUT ./pictures/Nonaga_intro/triangle win.png
+INPUT ./pictures/Nonaga_intro/triangle win.png
+INPUT ./pictures/Nonaga_intro/curve win.png
+INPUT ./pictures/Nonaga_intro/curve win.png
+INPUT ./pictures/Nonaga_intro/curve win.png
+INPUT ./pictures/Nonaga_intro/curve win.png
+INPUT ./pictures/Nonaga_intro/curve win.png
+INPUT ./pictures/Nonaga_intro/Piece move.png
+INPUT ./pictures/Nonaga_intro/Piece move.png
+INPUT ./pictures/Nonaga_intro/Piece move.png
+INPUT ./pictures/Nonaga_intro/Piece move.png
+INPUT ./pictures/Nonaga_intro/Piece move.png
+INPUT ./pictures/Nonaga_intro/Tile move.png
+INPUT ./pictures/Nonaga_intro/Tile move.png
+INPUT ./pictures/Nonaga_intro/Tile move.png
+INPUT ./pictures/Nonaga_intro/Tile move.png
+INPUT ./pictures/Nonaga_intro/Tile move.png
 INPUT ./chapters/chapter2.tex
 INPUT ./chapters/chapter2.tex
 OUTPUT ./chapters/chapter2.aux
 INPUT ./chapters/chapter2.tex
 INPUT ./chapters/chapter2.tex
 INPUT ./chapters/chapter2.tex
+INPUT ./pictures/Mthodology/class diagram.png
+INPUT ./pictures/Mthodology/class diagram.png
+INPUT ./pictures/Mthodology/class diagram.png
+INPUT ./pictures/Mthodology/class diagram.png
+INPUT ./pictures/Mthodology/class diagram.png
 INPUT ./chapters/chapter3.tex
 INPUT ./chapters/chapter3.tex
 OUTPUT ./chapters/chapter3.aux
@@ -380,7 +413,6 @@ INPUT ./pictures/Implementation/bitboards/hexa to cube.png
 INPUT ./pictures/Implementation/bitboards/hexa to cube.png
 INPUT ./pictures/Implementation/bitboards/hexa to cube.png
 INPUT ./pictures/Implementation/bitboards/hexa to cube.png
-INPUT c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm
 INPUT ./pictures/Implementation/bitboards/play-field.png
 INPUT ./pictures/Implementation/bitboards/play-field.png
 INPUT ./pictures/Implementation/bitboards/play-field.png
@@ -419,7 +451,17 @@ OUTPUT ./chapters/chapter4.aux
 INPUT ./chapters/chapter4.tex
 INPUT ./chapters/chapter4.tex
 INPUT ./chapters/chapter4.tex
+INPUT ./pictures/Evaluation/plot_b_pruning_nodes.pdf
+INPUT ./pictures/Evaluation/plot_b_pruning_nodes.pdf
+INPUT ./pictures/Evaluation/plot_b_pruning_nodes.pdf
+INPUT ./pictures/Evaluation/plot_b_pruning_nodes.pdf
+INPUT ./pictures/Evaluation/plot_b_pruning_nodes.pdf
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ecbx0800.tfm
+INPUT ./pictures/Evaluation/plot_e_tt_bounds.png
+INPUT ./pictures/Evaluation/plot_e_tt_bounds.png
+INPUT ./pictures/Evaluation/plot_e_tt_bounds.png
+INPUT ./pictures/Evaluation/plot_e_tt_bounds.png
+INPUT ./pictures/Evaluation/plot_e_tt_bounds.png
 INPUT ./finalReport.bbl
 INPUT ./finalReport.bbl
 INPUT finalReport.bbl
@@ -436,6 +478,16 @@ OUTPUT appendices.aux
 INPUT ./appendices.tex
 INPUT ./appendices.tex
 INPUT appendices.tex
+INPUT ./pictures/tile movability/cross.png
+INPUT ./pictures/tile movability/cross.png
+INPUT ./pictures/tile movability/cross.png
+INPUT ./pictures/tile movability/cross.png
+INPUT ./pictures/tile movability/cross.png
+INPUT ./pictures/tile movability/triangle.png
+INPUT ./pictures/tile movability/triangle.png
+INPUT ./pictures/tile movability/triangle.png
+INPUT ./pictures/tile movability/triangle.png
+INPUT ./pictures/tile movability/triangle.png
 INPUT ./pictures/init pos/starting piece move to movable.png
 INPUT ./pictures/init pos/starting piece move to movable.png
 INPUT ./pictures/init pos/starting piece move to movable.png

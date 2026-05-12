@@ -5,7 +5,7 @@
 \usepackage[export]{adjustbox}
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
-\usepackage{epsfig,graphics}
+\usepackage{epsfig, graphics}
 \usepackage{graphicx}
 \usepackage{titlesec}
 \usepackage{float}
@@ -13,6 +13,7 @@
 \usepackage{subcaption}
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage{placeins}
 % Load hyperref for clickable links
 \usepackage[
     pagebackref=true,  % Adds a link back to the citing page in the bibliography
@@ -21,7 +22,7 @@
     citecolor=blue,    % Color for bibliography citations
     urlcolor=blue      % Color for external web links
 ]{hyperref}
-\usepackage[capitalize,noabbrev]{cleveref}
+\usepackage[capitalize, noabbrev]{cleveref}
 
 % Optional: Customize how the back-reference text looks in the bibliography
 \renewcommand*{\backref}[1]{}
@@ -51,7 +52,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \geometry{
  a4paper,
- total={210mm,297mm},
+ total={210mm, 297mm},
  left=25mm,
  right=25mm,
  top=25mm,
@@ -92,7 +93,7 @@
 \newcommand{\frontcover}{
 % The title page:
 \begin{titlepage}
-\newgeometry{left=25mm,right=25mm,top=45mm,bottom=0.1cm}
+\newgeometry{left=25mm, right=25mm, top=45mm, bottom=0.1cm}
 
 \begin{minipage}[t]{10cm}
 \noindent\textbf{\Large{School of Computer Science}}\\
