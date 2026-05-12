@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.11)  12 MAY 2026 06:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.11)  12 MAY 2026 08:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -760,15 +760,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 19--20
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 21--22
-[]\T1/cmr/m/n/10.95 Uploaded to Min-erva
- []
-
-
 pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.52 \begin{dissertationsummary}
+l.48 \begin{dissertationsummary}
                                  [1
 
 
@@ -787,17 +782,17 @@ l.52 \begin{dissertationsummary}
 
  (./chapters/chapter1.tex
 Chapter 1.
-<pictures/Nonaga_intro/line win.png, id=417, 188.57953pt x 182.93344pt>
+<pictures/Nonaga_intro/line win.png, id=416, 188.57953pt x 182.93344pt>
 File: pictures/Nonaga_intro/line win.png Graphic file (type png)
 <use pictures/Nonaga_intro/line win.png>
 Package pdftex.def Info: pictures/Nonaga_intro/line win.png  used on input line 44.
 (pdftex.def)             Requested size: 95.6018pt x 92.73933pt.
-<pictures/Nonaga_intro/triangle win.png, id=418, 185.94469pt x 185.94469pt>
+<pictures/Nonaga_intro/triangle win.png, id=417, 185.94469pt x 185.94469pt>
 File: pictures/Nonaga_intro/triangle win.png Graphic file (type png)
 <use pictures/Nonaga_intro/triangle win.png>
 Package pdftex.def Info: pictures/Nonaga_intro/triangle win.png  used on input line 50.
 (pdftex.def)             Requested size: 95.6018pt x 95.6051pt.
-<pictures/Nonaga_intro/curve win.png, id=419, 190.08516pt x 191.9672pt>
+<pictures/Nonaga_intro/curve win.png, id=418, 190.08516pt x 191.9672pt>
 File: pictures/Nonaga_intro/curve win.png Graphic file (type png)
 <use pictures/Nonaga_intro/curve win.png>
 Package pdftex.def Info: pictures/Nonaga_intro/curve win.png  used on input line 56.
@@ -809,75 +804,75 @@ Package pdftex.def Info: pictures/Nonaga_intro/curve win.png  used on input line
 
 
 ]
-<pictures/Nonaga_intro/Piece move.png, id=432, 366.61969pt x 373.395pt>
+<pictures/Nonaga_intro/Piece move.png, id=431, 366.61969pt x 373.395pt>
 File: pictures/Nonaga_intro/Piece move.png Graphic file (type png)
 <use pictures/Nonaga_intro/Piece move.png>
 Package pdftex.def Info: pictures/Nonaga_intro/Piece move.png  used on input line 73.
 (pdftex.def)             Requested size: 195.75163pt x 199.37407pt.
-<pictures/Nonaga_intro/Tile move.png, id=433, 373.395pt x 437.38406pt>
+<pictures/Nonaga_intro/Tile move.png, id=432, 373.395pt x 437.38406pt>
 File: pictures/Nonaga_intro/Tile move.png Graphic file (type png)
 <use pictures/Nonaga_intro/Tile move.png>
 Package pdftex.def Info: pictures/Nonaga_intro/Tile move.png  used on input line 79.
 (pdftex.def)             Requested size: 195.75163pt x 229.29637pt.
- [2 <./pictures/Nonaga_intro/line win.png> <./pictures/Nonaga_intro/triangle win.png> <./pictures/Nonaga_intro/curve win.png> <./pictures/Nonaga_intro/Piece move.png> <./pictures/Nonaga_intro/Tile move.png>] [3] [4] [5] [6] [7]) [8] [9]
+ [2 <./pictures/Nonaga_intro/line win.png> <./pictures/Nonaga_intro/triangle win.png> <./pictures/Nonaga_intro/curve win.png> <./pictures/Nonaga_intro/Piece move.png> <./pictures/Nonaga_intro/Tile move.png>] [3] [4] [5] [6] [7]) [8]
 \openout2 = `./chapters/chapter2.aux'.
 
  (./chapters/chapter2.tex
 Chapter 2.
-[10
+[9
 
 
 
 
-] [11]
-<pictures/Mthodology/class diagram.png, id=614, 1435.61343pt x 789.70032pt>
+] [10]
+<pictures/Mthodology/class diagram.png, id=607, 1435.61343pt x 789.70032pt>
 File: pictures/Mthodology/class diagram.png Graphic file (type png)
 <use pictures/Mthodology/class diagram.png>
 Package pdftex.def Info: pictures/Mthodology/class diagram.png  used on input line 56.
 (pdftex.def)             Requested size: 386.96027pt x 212.86044pt.
- [12] [13 <./pictures/Mthodology/class diagram.png>]) [14]
+ [11] [12 <./pictures/Mthodology/class diagram.png>]) [13]
 \openout2 = `./chapters/chapter3.aux'.
 
  (./chapters/chapter3.tex
 Chapter 3.
-<pictures/Implementation/bitboards/hexa to cube.png, id=640, 307.1475pt x 179.16937pt>
+<pictures/Implementation/bitboards/hexa to cube.png, id=633, 307.1475pt x 179.16937pt>
 File: pictures/Implementation/bitboards/hexa to cube.png Graphic file (type png)
 <use pictures/Implementation/bitboards/hexa to cube.png>
 Package pdftex.def Info: pictures/Implementation/bitboards/hexa to cube.png  used on input line 22.
 (pdftex.def)             Requested size: 156.1498pt x 91.0881pt.
-<pictures/Implementation/bitboards/play-field.png, id=643, 1006.51031pt x 892.08281pt>
+<pictures/Implementation/bitboards/play-field.png, id=636, 1006.51031pt x 892.08281pt>
 File: pictures/Implementation/bitboards/play-field.png Graphic file (type png)
 <use pictures/Implementation/bitboards/play-field.png>
 Package pdftex.def Info: pictures/Implementation/bitboards/play-field.png  used on input line 31.
 (pdftex.def)             Requested size: 223.07211pt x 197.7017pt.
-[15
+[14
 
 
 
 
-] [16 <./pictures/Implementation/bitboards/hexa to cube.png> <./pictures/Implementation/bitboards/play-field.png>]
-<pictures/Implementation/bitboards/possible destinations 1.png, id=661, 429.85594pt x 408.02437pt>
+] [15 <./pictures/Implementation/bitboards/hexa to cube.png> <./pictures/Implementation/bitboards/play-field.png>]
+<pictures/Implementation/bitboards/possible destinations 1.png, id=654, 429.85594pt x 408.02437pt>
 File: pictures/Implementation/bitboards/possible destinations 1.png Graphic file (type png)
 <use pictures/Implementation/bitboards/possible destinations 1.png>
 Package pdftex.def Info: pictures/Implementation/bitboards/possible destinations 1.png  used on input line 83.
 (pdftex.def)             Requested size: 111.53606pt x 105.87215pt.
-<pictures/Implementation/bitboards/possible destinations 2.png, id=662, 420.82219pt x 417.81094pt>
+<pictures/Implementation/bitboards/possible destinations 2.png, id=655, 420.82219pt x 417.81094pt>
 File: pictures/Implementation/bitboards/possible destinations 2.png Graphic file (type png)
 <use pictures/Implementation/bitboards/possible destinations 2.png>
 Package pdftex.def Info: pictures/Implementation/bitboards/possible destinations 2.png  used on input line 91.
 (pdftex.def)             Requested size: 111.53606pt x 110.73212pt.
- [17] [18 <./pictures/Implementation/bitboards/possible destinations 1.png> <./pictures/Implementation/bitboards/possible destinations 2.png>]
-<pictures/Evaluation Function/Euclidean Distance.png, id=679, 380.92313pt x 392.21532pt>
+ [16] [17 <./pictures/Implementation/bitboards/possible destinations 1.png> <./pictures/Implementation/bitboards/possible destinations 2.png>]
+<pictures/Evaluation Function/Euclidean Distance.png, id=672, 380.92313pt x 392.21532pt>
 File: pictures/Evaluation Function/Euclidean Distance.png Graphic file (type png)
 <use pictures/Evaluation Function/Euclidean Distance.png>
 Package pdftex.def Info: pictures/Evaluation Function/Euclidean Distance.png  used on input line 133.
 (pdftex.def)             Requested size: 136.57462pt x 140.62286pt.
-<pictures/Evaluation Function/Alignement.png, id=680, 380.92313pt x 392.21532pt>
+<pictures/Evaluation Function/Alignement.png, id=673, 380.92313pt x 392.21532pt>
 File: pictures/Evaluation Function/Alignement.png Graphic file (type png)
 <use pictures/Evaluation Function/Alignement.png>
 Package pdftex.def Info: pictures/Evaluation Function/Alignement.png  used on input line 139.
 (pdftex.def)             Requested size: 136.57462pt x 140.62286pt.
-<pictures/Evaluation Function/Tile and Enemies Area.png, id=681, 380.92313pt x 392.21532pt>
+<pictures/Evaluation Function/Tile and Enemies Area.png, id=674, 380.92313pt x 392.21532pt>
 File: pictures/Evaluation Function/Tile and Enemies Area.png Graphic file (type png)
 <use pictures/Evaluation Function/Tile and Enemies Area.png>
 Package pdftex.def Info: pictures/Evaluation Function/Tile and Enemies Area.png  used on input line 145.
@@ -887,29 +882,29 @@ Underfull \hbox (badness 4341) in paragraph at lines 146--146
 \T1/cmr/m/n/10 tain-ing the cur-rent player's
  []
 
-[19] [20 <./pictures/Evaluation Function/Euclidean Distance.png> <./pictures/Evaluation Function/Alignement.png> <./pictures/Evaluation Function/Tile and Enemies Area.png>] [21] [22]) [23]
+[18] [19 <./pictures/Evaluation Function/Euclidean Distance.png> <./pictures/Evaluation Function/Alignement.png> <./pictures/Evaluation Function/Tile and Enemies Area.png>] [20] [21]) [22]
 \openout2 = `./chapters/chapter4.aux'.
 
  (./chapters/chapter4.tex
 Chapter 4.
-[24
+[23
 
 
 
 
-]
-<pictures/Evaluation/plot_b_pruning_nodes.pdf, id=746, 496.54445pt x 222.8689pt>
+] [24]
+<pictures/Evaluation/plot_b_pruning_nodes.pdf, id=747, 496.54445pt x 222.8689pt>
 File: pictures/Evaluation/plot_b_pruning_nodes.pdf Graphic file (type pdf)
 <use pictures/Evaluation/plot_b_pruning_nodes.pdf>
-Package pdftex.def Info: pictures/Evaluation/plot_b_pruning_nodes.pdf  used on input line 151.
+Package pdftex.def Info: pictures/Evaluation/plot_b_pruning_nodes.pdf  used on input line 147.
 (pdftex.def)             Requested size: 386.96027pt x 173.684pt.
- [25] [26 <./pictures/Evaluation/plot_b_pruning_nodes.pdf>]
-<pictures/Evaluation/plot_e_tt_bounds.png, id=805, 405.07335pt x 219.7008pt>
+ [25 <./pictures/Evaluation/plot_b_pruning_nodes.pdf>]
+<pictures/Evaluation/plot_e_tt_bounds.png, id=800, 405.07335pt x 219.7008pt>
 File: pictures/Evaluation/plot_e_tt_bounds.png Graphic file (type png)
 <use pictures/Evaluation/plot_e_tt_bounds.png>
-Package pdftex.def Info: pictures/Evaluation/plot_e_tt_bounds.png  used on input line 235.
+Package pdftex.def Info: pictures/Evaluation/plot_e_tt_bounds.png  used on input line 231.
 (pdftex.def)             Requested size: 386.96027pt x 209.88118pt.
- [27 <./pictures/Evaluation/plot_e_tt_bounds.png>] [28]) [29] (./finalReport.bbl (./finalReport.brf)
+ [26] [27 <./pictures/Evaluation/plot_e_tt_bounds.png>] [28]) [29] (./finalReport.bbl (./finalReport.brf)
 \tf@brf=\write6
 \openout6 = `finalReport.brf'.
 
@@ -926,61 +921,61 @@ Appendix A.
 
 
 
-]
+] [34] [35]
 Appendix B.
-[34
+[36
 
 ]
 Appendix C.
-<pictures/tile movability/cross.png, id=952, 194.97844pt x 165.61874pt>
+<pictures/tile movability/cross.png, id=981, 194.97844pt x 165.61874pt>
 File: pictures/tile movability/cross.png Graphic file (type png)
 <use pictures/tile movability/cross.png>
-Package pdftex.def Info: pictures/tile movability/cross.png  used on input line 63.
+Package pdftex.def Info: pictures/tile movability/cross.png  used on input line 99.
 (pdftex.def)             Requested size: 143.40126pt x 121.81296pt.
-<pictures/tile movability/triangle.png, id=953, 191.21437pt x 173.14688pt>
+<pictures/tile movability/triangle.png, id=982, 191.21437pt x 173.14688pt>
 File: pictures/tile movability/triangle.png Graphic file (type png)
 <use pictures/tile movability/triangle.png>
-Package pdftex.def Info: pictures/tile movability/triangle.png  used on input line 70.
+Package pdftex.def Info: pictures/tile movability/triangle.png  used on input line 106.
 (pdftex.def)             Requested size: 143.40126pt x 129.8572pt.
-[35
+[37
 
  <./pictures/tile movability/cross.png> <./pictures/tile movability/triangle.png>]
 Appendix D.
-<pictures/init pos/starting piece move to movable.png, id=961, 316.93407pt x 342.5297pt>
+<pictures/init pos/starting piece move to movable.png, id=991, 316.93407pt x 342.5297pt>
 File: pictures/init pos/starting piece move to movable.png Graphic file (type png)
 <use pictures/init pos/starting piece move to movable.png>
-Package pdftex.def Info: pictures/init pos/starting piece move to movable.png  used on input line 107.
+Package pdftex.def Info: pictures/init pos/starting piece move to movable.png  used on input line 143.
 (pdftex.def)             Requested size: 93.68987pt x 101.25444pt.
-<pictures/init pos/starting tile moves after movable.png, id=962, 434.37282pt x 414.79968pt>
+<pictures/init pos/starting tile moves after movable.png, id=992, 434.37282pt x 414.79968pt>
 File: pictures/init pos/starting tile moves after movable.png Graphic file (type png)
 <use pictures/init pos/starting tile moves after movable.png>
-Package pdftex.def Info: pictures/init pos/starting tile moves after movable.png  used on input line 114.
+Package pdftex.def Info: pictures/init pos/starting tile moves after movable.png  used on input line 150.
 (pdftex.def)             Requested size: 129.38223pt x 123.55475pt.
-<pictures/init pos/starting piece move to movable 2.png, id=968, 329.73187pt x 350.81062pt>
+<pictures/init pos/starting piece move to movable 2.png, id=998, 329.73187pt x 350.81062pt>
 File: pictures/init pos/starting piece move to movable 2.png Graphic file (type png)
 <use pictures/init pos/starting piece move to movable 2.png>
-Package pdftex.def Info: pictures/init pos/starting piece move to movable 2.png  used on input line 122.
+Package pdftex.def Info: pictures/init pos/starting piece move to movable 2.png  used on input line 158.
 (pdftex.def)             Requested size: 106.98264pt x 113.81938pt.
-[36
+[38
 
  <./pictures/init pos/starting piece move to movable.png> <./pictures/init pos/starting tile moves after movable.png>]
-<pictures/init pos/starting piece move to unmovable.png, id=980, 310.15875pt x 345.54094pt>
+<pictures/init pos/starting piece move to unmovable.png, id=1010, 310.15875pt x 345.54094pt>
 File: pictures/init pos/starting piece move to unmovable.png Graphic file (type png)
 <use pictures/init pos/starting piece move to unmovable.png>
-Package pdftex.def Info: pictures/init pos/starting piece move to unmovable.png  used on input line 131.
+Package pdftex.def Info: pictures/init pos/starting piece move to unmovable.png  used on input line 167.
 (pdftex.def)             Requested size: 88.08763pt x 98.1322pt.
-<pictures/init pos/starting tile moves after unmovable.png, id=981, 439.6425pt x 420.06938pt>
+<pictures/init pos/starting tile moves after unmovable.png, id=1011, 439.6425pt x 420.06938pt>
 File: pictures/init pos/starting tile moves after unmovable.png Graphic file (type png)
 <use pictures/init pos/starting tile moves after unmovable.png>
-Package pdftex.def Info: pictures/init pos/starting tile moves after unmovable.png  used on input line 138.
+Package pdftex.def Info: pictures/init pos/starting tile moves after unmovable.png  used on input line 174.
 (pdftex.def)             Requested size: 122.91632pt x 117.43915pt.
- [37 <./pictures/init pos/starting piece move to movable 2.png> <./pictures/init pos/starting piece move to unmovable.png> <./pictures/init pos/starting tile moves after unmovable.png>]
+ [39 <./pictures/init pos/starting piece move to movable 2.png> <./pictures/init pos/starting piece move to unmovable.png> <./pictures/init pos/starting tile moves after unmovable.png>]
 Appendix E.
-[38
+[40
 
 ]
 Appendix F.
-) [39
+) [41
 
 ] (./finalReport.aux (./prelude.aux) (./chapters/chapter1.aux) (./chapters/chapter2.aux) (./chapters/chapter3.aux) (./chapters/chapter4.aux) (./appendices.aux))
  ***********
@@ -990,21 +985,21 @@ L3 programming layer <2026-03-20>
 Package rerunfilecheck Info: File `finalReport.out' has not changed.
 (rerunfilecheck)             Checksum: 8EB090170789F799F1AFD6760531CA57;15808.
 Package rerunfilecheck Info: File `finalReport.brf' has not changed.
-(rerunfilecheck)             Checksum: 72D940AD855003ACA0A75E01E07CCC86;5333.
+(rerunfilecheck)             Checksum: 1797494423C86A3AAF4E9183AE695564;5770.
  ) 
 Here is how much of TeX's memory you used:
- 27238 strings out of 467351
- 519849 string characters out of 5419913
+ 27244 strings out of 467351
+ 519908 string characters out of 5419913
  1016574 words of memory out of 5000000
- 55624 multiletter control sequences out of 15000+600000
+ 55630 multiletter control sequences out of 15000+600000
  646054 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 104i,12n,134p,1878b,819s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 104i,12n,134p,1878b,828s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx0800.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb><c:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on finalReport.pdf (45 pages, 1108049 bytes).
+Output written on finalReport.pdf (47 pages, 1115096 bytes).
 PDF statistics:
- 1147 PDF objects out of 1200 (max. 8388607)
- 964 compressed objects within 10 object streams
+ 1176 PDF objects out of 1200 (max. 8388607)
+ 991 compressed objects within 10 object streams
  204 named destinations out of 1000 (max. 500000)
  712 words of extra memory for PDF output out of 10000 (max. 10000000)
 

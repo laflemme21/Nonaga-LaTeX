@@ -49,7 +49,7 @@ The $(q, r)$ axial coordinates are extracted via modulo operations ($\text{index
 
 
 
-Because a single bit can only represent a binary state (e.g., "occupied" or "empty"), the complete game environment cannot be modeled within a single flat array. Instead, the engine maintains distinct bitboards representing different logical layers of the game: red pieces, black pieces, all tiles, movable tiles, unmovable tiles, and a cache of valid tile destinations.
+Because a single bit can only represent a binary state (e.g., "occupied" or "empty"), the complete game environment cannot be modelled within a single flat array. Instead, the engine maintains distinct bitboards representing different logical layers of the game: red pieces, black pieces, all tiles, movable tiles, unmovable tiles, and a cache of valid tile destinations.
 
 \begin{itemize}
   \item \textbf{red pieces:} an array of $7 \times 64$ bits in which a 1 corresponds to a red piece being present at the corresponding coordinate.
@@ -67,11 +67,11 @@ The primary advantage of this architecture is that game logic is no longer proce
 To support the heavy computational demands of deep game tree searches (such as Alpha-Beta pruning), the engine's move generation must minimize CPU cycles. The engine achieves this through optimization layers, a few of which will be explained here.
 
 \subsubsection{Bare Metal Legality Check}\label{O1 lookup}
-Validating whether a single cell is a legal landing destination (candidate\_is\_legal\_for\_tiles) is the most frequently executed function in the engine. To optimize this, the engine avoids traditional spatial pathfinding entirely.
+Validating whether a single cell is a legal landing destination (\texttt{candidate\_is\_legal\_for\_tiles}) is the most frequently executed function in the engine. To optimize this, the engine avoids traditional spatial pathfinding entirely.
 
-Legality of a tile move in Nonaga relies solely on the immediate topology of a cell (\cref{sec:tile_movement_legality}). Therefore, the engine only evaluates the six immediate neighbors of a candidate cell. The engine performs a mask to ask a binary question: "Which neighbors are occupied?"
+Legality of a tile move in Nonaga relies solely on the immediate topology of a cell (\cref{sec:tile_movement_legality}). Therefore, the engine only evaluates the six immediate neighbours of a candidate cell. The engine performs a mask to ask a binary question: "Which neighbours are occupied?"
 
-The answers for these six neighbors are packed into a single 6-bit integer (representing a value from 0 to 63). This integer is then used as a direct index into a precomputed 64-entry lookup table containing all legal local shapes. Because the complex geometric rules of the game are written into this lookup table at compilation, validating any candidate cell resolves in a few CPU instructions.
+The answers for these six neighbours are packed into a single 6-bit integer (representing a value from 0 to 63). This integer is then used as a direct index into a precomputed 64-entry lookup table containing all legal local shapes. Because the complex geometric rules of the game are written into this lookup table at compilation, validating any candidate cell resolves in a few CPU instructions.
 
 \subsubsection{Sparse Traversal and Global Caching}
 While movable tiles possess distinct valid destinations (\cref{fig:possible moves 1,fig:possible moves 2}), there is typically a substantial intersection between their respective move sets.
@@ -94,14 +94,14 @@ While movable tiles possess distinct valid destinations (\cref{fig:possible move
   \end{minipage}
 \end{figure}
 
-To exploit this, the engine constructs a global cache of all theoretically legal destinations (rebuild\_tile\_destination\_cache). Rather than iterating through all 448 cells one-by-one, where the vast majority are empty space, the engine uses sparse bitboard traversal. By leveraging "find next set bit" hardware operations, the CPU jumps directly from one occupied tile to the next.
+To exploit this, the engine constructs a global cache of all theoretically legal destinations (\texttt{rebuild\_tile\_destination\_cache}). Rather than iterating through all 448 cells one-by-one, where the vast majority are empty space, the engine uses sparse bitboard traversal. By leveraging "find next set bit" hardware operations, the CPU jumps directly from one occupied tile to the next.
 
-For each occupied tile found, its adjacent empty cells are recorded in a temporary bitset. Because multiple tiles might point to the same empty neighbor, writing this to a bitset inherently deduplicates overlapping cells. Only these specific, pre-filtered candidates are then passed through the bare metal legality check.
+For each occupied tile found, its adjacent empty cells are recorded in a temporary bitset. Because multiple tiles might point to the same empty neighbour, writing this to a bitset inherently deduplicates overlapping cells. Only these specific, pre-filtered candidates are then passed through the bare metal legality check.
 
 \subsubsection{Differential Move Generation}
-When the engine needs to query the legal moves for one specific tile (bitboard\_get\_valid\_tile\_positions\_for\_tile), it employs a highly efficient differential update strategy.
+When the engine needs to query the legal moves for one specific tile (\texttt{bitboard\_get\_valid\_tile\_positions\_for\_tile}), it employs a highly efficient differential update strategy.
 
-Removing a source tile from the board logically alters the overall geometry. However, because legality is strictly dependent on immediate neighbors, removing a tile only affects the legality of its six immediate neighbors. Any cell farther away still possesses the exact same neighbor pattern as before.
+Removing a source tile from the board logically alters the overall geometry. However, because legality is strictly dependent on immediate neighbours, removing a tile only affects the legality of its six immediate neighbours. Any cell farther away still possesses the exact same neighbour pattern as before.
 
 The engine capitalizes on this mathematical guarantee by combining two methods. For any cell outside this 6-cell affected area, the engine completely trusts the global destination cache, instantly retrieving valid moves. The engine then distrusts the cache and re-runs the bare metal legality check only for the cells within the 6-cell subset. By utilizing the global cache for the majority of the board and only paying the computational cost for local rechecks near the moved tile, the engine achieves an exceptionally high work-per-instruction ratio.
 
@@ -153,9 +153,9 @@ The evaluation function utilizes a total of eight features and tuned weights to 
 
 
 \begin{description}
-  \item[1. Euclidean Distance:] As illustrated in \cref{subfig:feat1}, this feature quantifies the proximity of a player's pieces. Rather than calculating the total distance between all piece pairs, the heuristic sums only the two smallest distances. This approach accurately reflects the game's win condition: pieces only require a single adjacent neighbor to form a continuous chain. Minimizing these two specific distances directly facilitates the formation of a win-state without requiring redundant proximity between all three pieces.
+  \item[1. Euclidean Distance:] As illustrated in \cref{subfig:feat1}, this feature quantifies the proximity of a player's pieces. Rather than calculating the total distance between all piece pairs, the heuristic sums only the two smallest distances. This approach accurately reflects the game's win condition: pieces only require a single adjacent neighbour to form a continuous chain. Minimizing these two specific distances directly facilitates the formation of a win-state without requiring redundant proximity between all three pieces.
   \item[2. Axis Alignment:]  This feature, visualized in \cref{subfig:feat2}, measures the degree to which a player's pieces share a common hexagonal axis. In the game’s mechanics, pieces move in straight lines until an obstacle is reached; therefore, aligning pieces on the same axis is a critical strategic precursor to forming a connection. The heuristic assigns a value ($0, 1, $ or $2$) based on the number of collinear pairs. Notably, even if all three pieces are mutually aligned on a single axis, the maximum value remains $2$, as this represents the minimum number of connections required to link three discrete points into a single continuous chain.
-  \item[3. Missing Tiles:] This feature quantifies the "missing" space within the smallest bounding area containing a player's pieces (The area can be seen \cref{subfig:feat3}). In a dynamic hexagonal grid, empty spaces function as impassable voids that disrupt movement connection paths. A higher count of missing tiles increases the "topological distance" between pieces, forcing the agent to execute more complex, multi-turn maneuvers to bridge the gaps. This forces the evaluation function to prioritize board configurations that maintain a solid, maneuverable surface.
+  \item[3. Missing Tiles:] This feature quantifies the "missing" space within the smallest bounding area containing a player's pieces (The area can be seen \cref{subfig:feat3}). In a dynamic hexagonal grid, empty spaces function as impassable voids that disrupt movement connection paths. A higher count of missing tiles increases the "topological distance" between pieces, forcing the agent to execute more complex, multi-turn manoeuvres to bridge the gaps. This forces the evaluation function to prioritize board configurations that maintain a solid, manoeuvrable surface.
   \item[4. Opponent Disruption:] Similarly to Feature 3, this feature counts the number of opponent pieces in the smallest bounding area containing a player's pieces (The area can be seen \cref{subfig:feat3}). A higher number of opponent pieces between the current player's pieces makes it easier for them to impede the current player's plans.
 \end{description}
 
@@ -170,7 +170,7 @@ The encoding strategy maps directly to the linear evaluation function, which req
 \subsection{Fitness Evaluation via Tournaments}
 To evaluate the fitness of each chromosome, a tournament-style selection process is employed. An AI agent equipped with a specific chromosome's weights competes against $k$ opponents drawn from the current population. The scoring system awards $1$ point for a win, $0$ points for a loss, and $0.5$ points for a draw. The cumulative score at the conclusion of the tournament serves as the chromosome's fitness value.
 
-This approach is highly advantageous as it avoids making prior assumptions about opponent behavior, thereby mitigating the risk of overfitting against a specific, static strategy. Because the pool of opponents dynamically evolves across generations, the evaluation metric is inherently robust. While there exists a theoretical risk of a single chromosome dominating the population and reducing genetic diversity, empirical observations during development indicated that this was not a prevalent issue.
+This approach is highly advantageous as it avoids making prior assumptions about opponent behaviour, thereby mitigating the risk of overfitting against a specific, static strategy. Because the pool of opponents dynamically evolves across generations, the evaluation metric is inherently robust. While there exists a theoretical risk of a single chromosome dominating the population and reducing genetic diversity, empirical observations during development indicated that this was not a prevalent issue.
 
 \subsection{Selection, Crossover, and Mutation Operators}
 Once fitness values are assigned, chromosomes are selected for reproduction using the Roulette Wheel Selection method \cite{Katoch2021}. The probability of a chromosome being selected is directly proportional to its fitness value divided by the aggregate fitness of the entire population.
@@ -208,7 +208,7 @@ This continuous profiling loop was sustained until the Minimax algorithm achieve
 
 \subsection{Empirical Validation Of The Evolutionary Heuristic Optimization} \label{GA testing}
 
-Early considerations of the GA's tournament selection highlighted a fundamental algorithmic challenge known as the "relative fitness" problem \cite{rosin1997new}. Because a candidate chromosome's fitness is evaluated by playing matches against a limited subset of the current population, its apparent viability is entirely dependent on its immediate neighbors. For instance, a globally excellent gene tested exclusively by other highly evolved genes might yield a mediocre win-rate and be incorrectly discarded. Conversely, an average gene situated in a poorly performing sub-population might appear exceptional, an issue that can ultimately lead to a loss of evolutionary gradient or coevolutionary disengagement \cite{ficici2000game}.
+Early considerations of the GA's tournament selection highlighted a fundamental algorithmic challenge known as the "relative fitness" problem \cite{rosin1997new}. Because a candidate chromosome's fitness is evaluated by playing matches against a limited subset of the current population, its apparent viability is entirely dependent on its immediate neighbours. For instance, a globally excellent gene tested exclusively by other highly evolved genes might yield a mediocre win-rate and be incorrectly discarded. Conversely, an average gene situated in a poorly performing sub-population might appear exceptional, an issue that can ultimately lead to a loss of evolutionary gradient or co-evolutionary disengagement \cite{ficici2000game}.
 
 To test the results of GA runs and to establish an objective performance baseline, supposedly elite chromosomes were systematically evaluated against a mostly fixed, heterogeneous benchmark pool rather than relying solely on intra-population play. This adversarial cohort was deliberately stratified into three categories:
 

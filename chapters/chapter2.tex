@@ -34,7 +34,7 @@ To systematically optimize the weights of these parameters, a Genetic Algorithm 
 
 A Random K-Opponent Tournament Scheduler was engineered, forcing genomes to compete against each other in self-play to determine their fitness. A unique challenge in optimizing heuristics for adversarial games is that fitness is entirely relative; a gene's performance is strictly dependent on the quality of its opponents. To mitigate this noise, the $K$ parameter (number of opponents) must be set as high as computationally acceptable to ensure a statistically significant fitness score. In practice, $K$ was determined empirically by incrementally increasing the number of opponents until the variance in fitness rankings across repeated runs stabilised. Roulette wheel selection and arithmetic crossover were selected as the GA operators, as these are well-established for continuous-valued parameter optimisation \cite{Katoch2021}; their concrete implementation is detailed in \cref{sec:ga_framework}.
 
-It was recommended to benchmark the GA's convergence against an absolute "apex gene" found via brute-force search over a restricted domain (1--6 per parameter) \cite{assessor}. However, calculations revealed this to be unfeasible due to the estimated execution time and heavily neighborhood-dependent nature of the fitness landscape (further detailed in \cref{sec:hpc_feasibility}).
+It was recommended to benchmark the GA's convergence against an absolute "apex gene" found via brute-force search over a restricted domain (1--6 per parameter) \cite{assessor}. However, calculations revealed this to be unfeasible due to the estimated execution time and heavily neighbourhood-dependent nature of the fitness landscape (further detailed in \cref{sec:hpc_feasibility}).
 
 While advanced evolutionary strategies, specifically Linkage Learning, were proposed as a potential solution to this landscape dependency \cite{assessor}, their implementation was ultimately deemed out of scope. The core objective of the GA was to tune the evaluation function parameters to a highly performant standard, which the implemented baseline achieved successfully (as discussed in \cref{sec:ga_results}). For that reason, development resources were strategically reallocated to engine polishing and system optimization rather than over-engineering the evolutionary framework.
 
@@ -52,17 +52,17 @@ C was preferred over managed-runtime alternatives such as Java for the performan
 The resulting component structure of the main game client, illustrating which classes invoke one another and the rationale for those dependencies, is shown in Figure~\ref{fig:classdiagram}.
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/Mthodology/class diagram.png}
-    \caption{Class diagram of the main game client, illustrating the call dependencies between core software components.}
-    \label{fig:classdiagram}
+  \centering
+  \includegraphics[width=0.85\textwidth]{pictures/Mthodology/class diagram.png}
+  \caption{Class diagram of the main game client, illustrating the call dependencies between core software components.}
+  \label{fig:classdiagram}
 \end{figure}
 
 \section{Project Management}
 
 Throughout the project lifecycle, \texttt{git} was employed as the primary version control system to manage the evolving codebase, track granular changes, and maintain a secure repository. Development was structured around a feature-branch workflow, with each phase's deliverable developed and stabilised on a dedicated branch before integration into the main trunk. This ensured that regressions introduced during low-level optimisation (Phase 3) could be isolated without destabilising the working implementation from earlier phases.
 
-Initially, a rigid, linear project plan was formulated in the Project Outline and Specification; however, early implementation phases revealed that this structure was overly abstracted and practically restrictive. The original plan operated on the flawed assumption of strict modular independence. In reality, the high degree of uncertainty in the exact implementation methods rendered the strict Waterfall approach implied in the plan nonviable.
+Initially, a rigid, linear project plan was formulated in the Project Outline and Specification; however, early implementation phases revealed that this structure was overly abstracted and practically restrictive. The original plan operated on the flawed assumption of strict modular independence. In reality, the high degree of uncertainty in the exact implementation methods rendered the strict Waterfall approach implied in the plan non-viable.
 
 Consequently, the project management strategy shifted to an adaptive, feature-driven Agile methodology. Development followed a verification-first discipline: each feature was considered complete only once it had been validated against a defined set of functional criteria, with custom diagnostic tooling developed specifically to support this process (detailed in \cref{sec:freemove}). The workflow followed a strict iterative loop: a target feature was engineered, rigorously verified against its functional requirements, and fully stabilized before continuous research dictated the selection and prioritization of the subsequent development target.
 
@@ -71,15 +71,15 @@ Consequently, the project management strategy shifted to an adaptive, feature-dr
 Because the project required continuous research and adaptation, the development lifecycle was structured around flexible objectives rather than strict time-boxed intervals. Each phase focused on delivering a functional, verifiable component of the overarching system. These phases map directly to the four project objectives outlined in \cref{sec:aim}: Phase 1 delivers the interactive GUI, Phases 2 and 3 deliver the high-performance engine and adversarial search, Phase 4 delivers the validation infrastructure, and Phase 5 delivers the GA optimisation pipeline.
 
 \begin{itemize}
-    \item \textbf{Phase 1: Core Mechanics and Visualization:} The initial focus was establishing a ground-truth representation of the game. The core rules of Nonaga were implemented in Python, paired with an interactive PyGame graphical user interface. By the end of this phase, human players could execute a valid game from start to finish, establishing a reliable baseline for future AI integration.
+  \item \textbf{Phase 1: Core Mechanics and Visualization:} The initial focus was establishing a ground-truth representation of the game. The core rules of Nonaga were implemented in Python, paired with an interactive PyGame graphical user interface. By the end of this phase, human players could execute a valid game from start to finish, establishing a reliable baseline for future AI integration.
 
-    \item \textbf{Phase 2: Adversarial Search Integration:} With a valid state representation in place, the focus shifted to algorithmic decision-making. By the end of this phase, the Minimax algorithm, enhanced with alpha-beta pruning, was successfully implemented to evaluate game trees.
+  \item \textbf{Phase 2: Adversarial Search Integration:} With a valid state representation in place, the focus shifted to algorithmic decision-making. By the end of this phase, the Minimax algorithm, enhanced with alpha-beta pruning, was successfully implemented to evaluate game trees.
 
-    \item \textbf{Phase 3: Low-Level Optimization:} The objective of this phase was to minimize execution latency, thereby incrementally increasing the permissible search depth of the AI. By the end of this phase, the AI achieved a stable search depth of 3 within a pragmatic execution timeframe (a few seconds per move). This phase encompassed the language migration of performance-critical loops from pure Python to Cython/C, alongside the integration of bitboards, Transposition Tables, and move-ordering heuristics.
+  \item \textbf{Phase 3: Low-Level Optimization:} The objective of this phase was to minimize execution latency, thereby incrementally increasing the permissible search depth of the AI. By the end of this phase, the AI achieved a stable search depth of 3 within a pragmatic execution timeframe (a few seconds per move). This phase encompassed the language migration of performance-critical loops from pure Python to Cython/C, alongside the integration of bitboards, Transposition Tables, and move-ordering heuristics.
 
-    \item \textbf{Phase 4: Diagnostic Tooling and Verification:} Custom diagnostic UI tools (detailed in \cref{sec:freemove}) were developed to manually verify the functional validity of the underlying engine modifications. This phase was introduced to establish a robust debugging infrastructure, facilitating the immediate isolation of logical regressions and minimizing subsequent debugging overhead as the architecture grew in complexity.
+  \item \textbf{Phase 4: Diagnostic Tooling and Verification:} Custom diagnostic UI tools (detailed in \cref{sec:freemove}) were developed to manually verify the functional validity of the underlying engine modifications. This phase was introduced to establish a robust debugging infrastructure, facilitating the immediate isolation of logical regressions and minimizing subsequent debugging overhead as the architecture grew in complexity.
 
-    \item \textbf{Phase 5: Evolutionary Tuning and Profiling:} The final phase focused on maximizing the AI's heuristic accuracy and computational efficiency. By the end of this phase, a modular Genetic Algorithm framework was constructed to automate the tuning of evaluation weights, resulting in a highly proficient artificial opponent.
+  \item \textbf{Phase 5: Evolutionary Tuning and Profiling:} The final phase focused on maximizing the AI's heuristic accuracy and computational efficiency. By the end of this phase, a modular Genetic Algorithm framework was constructed to automate the tuning of evaluation weights, resulting in a highly proficient artificial opponent.
 \end{itemize}
 
 This phase-driven approach provided the necessary flexibility to adapt to emergent technical challenges. Rather than adhering strictly to predetermined milestones, development iteratively cycled back to previous phases to address critical bottlenecks such as returning to core optimization (Phase 3) when subsequent heuristic tuning (Phase 5) revealed underlying performance constraints. Ultimately, the priority was to engineer a robust, high-performing AI, justifying deviations from the initial, rigid project specification.

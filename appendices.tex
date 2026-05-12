@@ -5,35 +5,71 @@
 %
 \chapter{Self-appraisal}
 
-<This appendix should contain everything covered by the 'self-appraisal' criterion in the mark scheme. Although there is no length limit for this section, 2---4 pages will normally be sufficient. The format of this section is not prescribed, but you may like to organise your discussion into the following sections and subsections.>
-
 \section{Critical self-evaluation}
 
 \subsection{Project Scope and Time Management}
 
+Development proceeded more reactively than planned. Rather than defining a comprehensive feature roadmap upfront, work on each component began when it became the immediate bottleneck. This was partly a consequence of the initial Waterfall plan proving too rigid: new algorithmic questions emerged during implementation that required revisiting the background material, making a clean design-then-build separation impractical. The transition toward Agile methodologies was therefore organic, and proved more effective in this context, as short iteration cycles allowed design decisions to incorporate findings from earlier implementation phases.
+
+The most significant scope casualty was machine learning evaluation functions of the kind employed by AlphaZero~\cite{silver2018general} and NNUE-based engines~\cite{nasu2018nnue}. These represent the techniques that enable superhuman play and were an early ambition, but the research and experimentation they require placed them outside the feasible scope of a solo project under concurrent module workload. Deprioritising them in favour of depth in the GA and bitboard components was the correct call. Progress also stalled at points due to motivation dips, a structural vulnerability of solo projects that teams naturally absorb collectively. Overall, the final system meets all four core objectives stated in \cref{chapter1}; the exclusion of machine learning remains the primary gap relative to the original vision.
 
 \section{Personal reflection and lessons learned}
+
 \subsection{Lessons Learned in Cross-Language Integration}
+
+The decision to implement the engine in C, expose it through Cython, and orchestrate it from Python was a deliberate risk. No prior implementation existed for Nonaga's specific topology, and the cross-language stack introduced complexity at every layer. The motivating judgement was that an ambitious but incomplete project was preferable to a safe but computationally inadequate one: the legacy Python engine could not support meaningful adversarial search, and accepting that would have constrained the entire project.
+
+One risk that was not adequately anticipated was profiling a mixed-language codebase. Standard Python profilers cannot instrument the C kernel; C-level profilers require debug symbols and produce output difficult to correlate with Python call sites. A solution was found using \texttt{py-spy} with \texttt{gcc -g} debug symbols to generate full-stack flame graphs~\cite{pyspy}, but only after the architectural commitment had been made. Prototyping the observability toolchain before committing to the stack would have surfaced this earlier.
+
+A second lesson concerns the Genetic Algorithm and epistasis. The working assumption was that its effects on convergence could be managed by increasing tournament size $k$ or generation count. This proved incorrect: the eight evaluation weights interact non-linearly, and increasing population diversity does not disentangle these dependencies. A linkage-learning approach~\cite{newman2006use,pelikan1999boa} would theoretically address this but was deemed out of scope, as discussed in \cref{chapter2}. The episode illustrated the gap between understanding a concept theoretically and estimating its practical consequences correctly.
+
+Finally, a background in chess and its engine literature shaped many implementation choices. Techniques such as iterative deepening, Zobrist hashing, and alpha-beta pruning with transposition tables were adopted partly because of their success in that domain. This provided a strong theoretical grounding but was occasionally a source of miscalibration: Nonaga's substantially higher branching factor and shallower average game depth mean that the relative payoff of search depth versus move ordering differs considerably from chess, and this required conscious adjustment throughout.
 
 \section{Legal, social, ethical and professional issues}
 
-<Refer to each of these issues in turn. If one or more is not relevant to your project, you should still explain {\em why} you think it was not relevant.>
-
 \subsection{Legal issues}
+
+The implementation uses several open-source libraries: \texttt{pygame} (LGPL v2.1), \texttt{Cython} (Apache 2.0), \texttt{py-spy} (MIT), \texttt{setuptools} (MIT), \texttt{snakeviz} (BSD 3-Clause), and \texttt{tornado} (Apache 2.0). All licences permit non-commercial academic use without restriction. The C engine and all application logic were written from scratch.
+
+Nonaga is a commercially licensed game~\cite{nonaga_rules}; its rules and branding are the intellectual property of its creator. This implementation makes no claim of originality over the rules and was developed solely for academic research. Any commercial deployment would require explicit authorisation from the rights holder. At least one other public software implementation of Nonaga exists; it was not reviewed in detail and no code or assets from it were used.
 
 \subsection{Social issues}
 
+Nonaga is a highly abstract two-player game with no content relating to social issues, demographic groups, or politically sensitive topics. Its social footprint is minimal. The main social consideration is accessibility: a colourblind display mode and keyboard-only navigation were not implemented, as the interface was a demonstration platform rather than a production release. These would need to be addressed before any public distribution.
+
 \subsection{Ethical issues}
 
+The system raises no significant ethical concerns. No user data is collected, stored, or transmitted: the application requests no username, logs no gameplay, and communicates over no network. The only persistence is a local JSON file storing the board state on explicit user request, containing no personal information.
+
 \subsection{Digital Game Addiction and Gambling Considerations}
+
+This concern was raised during the assessor meeting~\cite{assessor}. Nonaga-Online exhibits none of the design patterns associated with addictive game mechanics: no monetisation, no reward loops, no streaks, no social pressure, and no online multiplayer. Attributing addiction risk to this application would be equivalent to attributing it to a chess program; the software offers a cognitive challenge but none of the operant conditioning scaffolding characteristic of genuinely addictive products. No gambling mechanism exists, and the game's abstract nature makes it an unlikely target for informal wagering. Digital game addiction and gambling are not applicable concerns for this project.
+
 \subsection{Professional issues}
 
+Version control was managed through Git with a branching workflow: each major feature was developed on a dedicated branch and merged after validation. The repository includes a README and inline comments at key algorithmic decision points. Performance validation used instrumented benchmark harnesses rather than ad hoc timing.
+
+For a production release, several improvements would be needed: more formally specified interface contracts between the C kernel, Cython bridge, and Python layer; substantially expanded in-code documentation; and a higher-level architectural document describing inter-file dependencies. A tracked issue list would provide external contributors with clear entry points, particularly for machine learning evaluation functions and the accessibility features noted above.
 
 %
 % Any other appendices you wish to use should come after "Self-appraisal". You can have as many appendices as you like.
 %
 \chapter{External Material}
-<This appendix should provide a brief record of materials used in the solution that are not the student's own work. Such materials might be pieces of codes made available from a research group/company or from the internet, datasets prepared by external users or any preliminary materials/drafts/notes provided by a supervisor. It should be clear what was used as ready-made components and what was developed as part of the project. This appendix should be included even if no external materials were used, in which case a statement to that effect is all that is required.>
+
+All game logic, the C/Cython bitboard engine, the minimax AI kernel, the Genetic Algorithm framework, the benchmarking harnesses, and the PyGame graphical interface were designed and implemented from scratch as part of this project. No external code was incorporated into the system.
+
+The following open-source libraries were used as dependencies and were not modified:
+
+\begin{itemize}
+  \item \texttt{pygame} (v2.6.1, LGPL v2.1): graphical rendering and event handling for the user interface.
+  \item \texttt{Cython} (v3.2.4, Apache 2.0): compilation of the \texttt{.pyx} bridge modules linking the C engine to the Python orchestration layer.
+  \item \texttt{py-spy} (v0.4.1, MIT): sampling profiler used to generate flame graphs of the full C/Python call stack during performance analysis.
+  \item \texttt{setuptools} (v82.0.1, MIT): build tooling for compiling the Cython extensions.
+  \item \texttt{snakeviz} (v2.2.2, BSD 3-Clause): visualisation tool for \texttt{cProfile} output, used during early profiling stages.
+  \item \texttt{tornado} (v6.5.4, Apache 2.0): dependency of \texttt{snakeviz}.
+\end{itemize}
+
+The Nonaga board game rules are the intellectual property of their creator~\cite{nonaga_rules} and were used solely for academic purposes. No assets, branding, or code were taken from any existing Nonaga software implementation.
 
 
 
@@ -140,7 +176,7 @@ After the piece move in \cref{fig:starting piece move to movable}, the total num
         \label{fig:starting tile moves after unmovable}
     \end{minipage}
 \end{figure}
-After the piece move shown in \cref{fig:starting piece move to unmovable}, the total number of possible tile moves (\cref{fig:starting tile moves after unmovable}) is calculated as $N_{\text{tiles}} \times D = 7 \times 10 = 70$. Consequently, the total number of valid moves for the starting position is $3 \times (60 \times 2 + 70) = 570$.While the starting position provides a theoretical maximum, empirical analysis of middle-game states indicates an effective branching factor ($b$) of approximately 440. This reduction occurs because pieces become tightly packed as the game progresses, physically restricting their valid movement vectors. A branching factor of 440 is exceptionally high. For context, Chess has an average branching factor of approximately 35 \cite{Artificial_intelligence}, and Go, a game long considered a grand challenge for AI until the advent of AlphaGo in 2016 \cite{Go_Paper}, averages around 250. However, evaluating a game's computational difficulty requires analyzing the overall game-tree complexity, approximated as $O(b^d)$, where $d$ is the average game depth. While Nonaga's branching factor is roughly 12.5 times larger than that of Chess, a typical game of Nonaga lasts for only about 15 moves. In contrast, Chess averages around 40 full moves (80 plies) and Go extends to roughly 150 moves. Therefore, despite the dense move generation at any individual node, the shallow depth of Nonaga significantly truncates the overall search space. This specific structural characteristic makes the game highly suitable for the Iterative Deepening Minimax architecture with Alpha-Beta pruning implemented in this project, as terminal or highly-evaluable states can be reached within a computationally feasible horizon.
+After the piece move shown in \cref{fig:starting piece move to unmovable}, the total number of possible tile moves (\cref{fig:starting tile moves after unmovable}) is calculated as $N_{\text{tiles}} \times D = 7 \times 10 = 70$. Consequently, the total number of valid moves for the starting position is $3 \times (60 \times 2 + 70) = 570$.While the starting position provides a theoretical maximum, empirical analysis of middle-game states indicates an effective branching factor ($b$) of approximately 440. This reduction occurs because pieces become tightly packed as the game progresses, physically restricting their valid movement vectors. A branching factor of 440 is exceptionally high. For context, Chess has an average branching factor of approximately 35 \cite{Artificial_intelligence}, and Go, a game long considered a grand challenge for AI until the advent of AlphaGo in 2016 \cite{Go_Paper}, averages around 250. However, evaluating a game's computational difficulty requires analysing the overall game-tree complexity, approximated as $O(b^d)$, where $d$ is the average game depth. While Nonaga's branching factor is roughly 12.5 times larger than that of Chess, a typical game of Nonaga lasts for only about 15 moves. In contrast, Chess averages around 40 full moves (80 plies) and Go extends to roughly 150 moves. Therefore, despite the dense move generation at any individual node, the shallow depth of Nonaga significantly truncates the overall search space. This specific structural characteristic makes the game highly suitable for the Iterative Deepening Minimax architecture with Alpha-Beta pruning implemented in this project, as terminal or highly-evaluable states can be reached within a computationally feasible horizon.
 
 
 
@@ -166,7 +202,7 @@ GA and a representative game duration of 20~seconds, the total sequential comput
 Parallelising across the 46 available AIRE cores reduces this to approximately 169~days,
 still far exceeding both the project timeline and the available HPC allocation. For the
 full $[0, 50]^8$ domain the figure is larger by a factor of $(51/6)^8 \approx 11{,}200$,
-rendering the problem cosmologically infeasible in any unparallelised regime.
+rendering the problem cosmologically infeasible in any unparalleled regime.
 
 Beyond raw compute time, there is a deeper methodological objection: as discussed in
 \cref{GA testing}, a chromosome's fitness is inherently relative to the quality of its

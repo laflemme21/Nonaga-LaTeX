@@ -57,6 +57,12 @@ S.~G. Ficici and J.~B. Pollack.
 \newblock A game-theoretic approach to the simple coevolutionary algorithm.
 \newblock In {\em Parallel Problem Solving from Nature PPSN VI}, pages 467--476. Springer, 2000.
 
+\bibitem{pyspy}
+B.~Frederickson.
+\newblock py-spy: Sampling profiler for python programs.
+\newblock \url{https://github.com/benfred/py-spy}, 2023.
+\newblock Accessed: 2024.
+
 \bibitem{goldberg1989genetic}
 D.~E. Goldberg.
 \newblock {\em Genetic Algorithms in Search, Optimization, and Machine Learning}.

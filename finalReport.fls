@@ -350,7 +350,6 @@ INPUT summary.tex
 INPUT ./acknowledge.tex
 INPUT ./acknowledge.tex
 INPUT acknowledge.tex
-INPUT c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ectt1095.tfm
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ecrm2488.tfm
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ecbx2488.tfm
 INPUT ./finalReport.toc
@@ -391,6 +390,7 @@ INPUT ./pictures/Nonaga_intro/Tile move.png
 INPUT ./pictures/Nonaga_intro/Tile move.png
 INPUT ./pictures/Nonaga_intro/Tile move.png
 INPUT ./pictures/Nonaga_intro/Tile move.png
+INPUT c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ectt1095.tfm
 INPUT ./chapters/chapter2.tex
 INPUT ./chapters/chapter2.tex
 OUTPUT ./chapters/chapter2.aux
