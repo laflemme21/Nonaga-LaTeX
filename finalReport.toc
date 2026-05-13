@@ -71,22 +71,24 @@
 \contentsline {subsection}{\numberline {4.2.3}Combined Optimisation: Final Engine Throughput}{28}{subsection.4.2.3}%
 \contentsline {subsection}{\numberline {4.2.4}Discussion}{28}{subsection.4.2.4}%
 \contentsline {section}{\numberline {4.3}Genetic Algorithm Optimisation Results}{28}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Evaluation Summary}{29}{section.4.4}%
-\contentsline {chapter}{Appendices}{33}{section*.36}%
-\contentsline {chapter}{\numberline {A}Self-appraisal}{33}{chapter.1.A}%
-\contentsline {section}{\numberline {A.1}Critical self-evaluation}{33}{section.1.A.1}%
-\contentsline {subsection}{\numberline {A.1.1}Project Scope and Time Management}{33}{subsection.1.A.1.1}%
-\contentsline {section}{\numberline {A.2}Personal reflection and lessons learned}{33}{section.1.A.2}%
-\contentsline {subsection}{\numberline {A.2.1}Lessons Learned in Cross-Language Integration}{33}{subsection.1.A.2.1}%
-\contentsline {section}{\numberline {A.3}Legal, social, ethical and professional issues}{34}{section.1.A.3}%
-\contentsline {subsection}{\numberline {A.3.1}Legal issues}{34}{subsection.1.A.3.1}%
-\contentsline {subsection}{\numberline {A.3.2}Social issues}{34}{subsection.1.A.3.2}%
-\contentsline {subsection}{\numberline {A.3.3}Ethical issues}{34}{subsection.1.A.3.3}%
-\contentsline {subsection}{\numberline {A.3.4}Digital Game Addiction and Gambling Considerations}{35}{subsection.1.A.3.4}%
-\contentsline {subsection}{\numberline {A.3.5}Professional issues}{35}{subsection.1.A.3.5}%
-\contentsline {chapter}{\numberline {B}External Material}{36}{chapter.1.B}%
-\contentsline {chapter}{\numberline {C}Tile Movement Legality Rule}{37}{chapter.1.C}%
-\contentsline {chapter}{\numberline {D}Nonaga's Branching Factor Calculation}{38}{chapter.1.D}%
-\contentsline {chapter}{\numberline {E}Brute-Force Feasibility Analysis}{40}{chapter.1.E}%
-\contentsline {chapter}{\numberline {F}Benchmark Implementation}{41}{chapter.1.F}%
-\contentsline {section}{\numberline {F.1}Benchmarking Harnesses Variations}{41}{section.1.F.1}%
+\contentsline {subsection}{\numberline {4.3.1}Generational Improvement Signal}{29}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Overall Solution Quality}{29}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Evaluation Summary}{30}{section.4.4}%
+\contentsline {chapter}{Appendices}{35}{section*.37}%
+\contentsline {chapter}{\numberline {A}Self-appraisal}{35}{chapter.1.A}%
+\contentsline {section}{\numberline {A.1}Critical self-evaluation}{35}{section.1.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}Project Scope and Time Management}{35}{subsection.1.A.1.1}%
+\contentsline {section}{\numberline {A.2}Personal reflection and lessons learned}{35}{section.1.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}Lessons Learned in Cross-Language Integration}{35}{subsection.1.A.2.1}%
+\contentsline {section}{\numberline {A.3}Legal, social, ethical and professional issues}{36}{section.1.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}Legal issues}{36}{subsection.1.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Social issues}{36}{subsection.1.A.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Ethical issues}{36}{subsection.1.A.3.3}%
+\contentsline {subsection}{\numberline {A.3.4}Digital Game Addiction and Gambling Considerations}{37}{subsection.1.A.3.4}%
+\contentsline {subsection}{\numberline {A.3.5}Professional issues}{37}{subsection.1.A.3.5}%
+\contentsline {chapter}{\numberline {B}External Material}{38}{chapter.1.B}%
+\contentsline {chapter}{\numberline {C}Tile Movement Legality Rule}{39}{chapter.1.C}%
+\contentsline {chapter}{\numberline {D}Nonaga's Branching Factor Calculation}{40}{chapter.1.D}%
+\contentsline {chapter}{\numberline {E}Brute-Force Feasibility Analysis}{42}{chapter.1.E}%
+\contentsline {chapter}{\numberline {F}Benchmark Implementation}{43}{chapter.1.F}%
+\contentsline {section}{\numberline {F.1}Benchmarking Harnesses Variations}{43}{section.1.F.1}%

@@ -22,7 +22,7 @@ To achieve this overarching aim, the project focuses on several core objectives,
 
   \item \textbf{Adversarial Search (Looking Ahead):} The AI needs the ability to predict future outcomes. This objective involves implementing a strategic decision-making algorithm that allows the system to simulate thousands of potential future board states. By evaluating these outcomes, the system can quickly discard mathematically poor moves and select the most advantageous ones.
 
-  \item \textbf{Evaluation Optimization (Developing Intuition):} The AI must be able to judge whether each board positions are advantageous. To implement this "intuition," the project implements an automated learning framework. By having the AI play thousands of simulated matches, the system systematically evolves and improves itself without relying on human intervention.
+  \item \textbf{Evaluation Optimization (Developing Intuition):} The AI must be able to judge whether each board positions are advantageous. To implement this ``intuition,'' the project implements an automated learning framework. By having the AI play thousands of simulated matches, the system systematically evolves and improves itself without relying on human intervention.
 
   \item \textbf{Interactive Client Development (User Interface):} To make the engine accessible and testable, the final objective is building a simple Graphical User Interface (GUI) that allows human users to play against the AI.
 
@@ -113,13 +113,13 @@ The most straightforward approach for board state representation is Object-Orien
 
 \subsection{Bitboard Representation}
 
-On the opposite, modern high-performance engines rely on Data-Oriented Design (DOD), which prioritizes memory contiguity and hardware-level efficiency. By representing the game state as a series of 64-bit integers, known as "bitboards", the engine can map boolean states (e.g., piece presence, color, or valid tiles) directly to individual bits. Studies have shown that contiguous, bit-level representations can achieve speedups of over 13x compared to equivalent OOP architectures by maximizing cache efficiency and allowing parallel evaluations via bitwise logical operations (AND, OR, XOR) \cite{wingqvist2022dod}.
+On the opposite, modern high-performance engines rely on Data-Oriented Design (DOD), which prioritizes memory contiguity and hardware-level efficiency. By representing the game state as a series of 64-bit integers, known as ``bitboards'', the engine can map boolean states (e.g., piece presence, colour, or valid tiles) directly to individual bits. Studies have shown that contiguous, bit-level representations can achieve speedups of over 13x compared to equivalent OOP architectures by maximizing cache efficiency and allowing parallel evaluations via bitwise logical operations (AND, OR, XOR) \cite{wingqvist2022dod}.
 
 While bitboards are the de facto standard in computer chess, they present unique implementation paradigms that must be carefully evaluated. Bitboard state transitions can theoretically operate 64 times faster than array encodings; however, poorly optimized bit-manipulation can introduce significant overhead, making the underlying mathematical model critical \cite{segundo2006}. Furthermore, generalizing bitboards to non-standard geometries requires careful mathematical mapping \cite{browne2014bitboards}.
 
 \subsubsection{Evaluating Bitboard Architectures for Sliding Pieces}
 
-A fundamental challenge in bitboard design is move generation, which is broadly categorized into "leaping" and "sliding" mechanics \cite{browne2014bitboards}. Leaping pieces (such as a Knight in chess) have static attack patterns relative to their coordinate, requiring a simple array lookup: \texttt{Attacks[coordinate]}.
+A fundamental challenge in bitboard design is move generation, which is broadly categorized into ``leaping'' and ``sliding'' mechanics \cite{browne2014bitboards}. Leaping pieces (such as a Knight in chess) have static attack patterns relative to their coordinate, requiring a simple array lookup: \texttt{Attacks[coordinate]}.
 
 Conversely, sliding pieces, which move continuously along an axis until obstructed by the board edge or another piece, require dynamic calculation based on current board occupancy. Historically, computing these sliding rays using step-by-step bitwise shifts was computationally expensive \cite{hyatt1999rotated}. To mitigate this, two primary architectures used for chess have dominated engine design:
 
@@ -127,7 +127,7 @@ Conversely, sliding pieces, which move continuously along an axis until obstruct
 
   \item \textbf{Rotated Bitboards:} An older, slower technique that maintains multiple redundant bitboards rotated along different axes (e.g., 90$^{\circ}$, 45$^{\circ}$, 315$^{\circ}$). This transforms diagonal and vertical rays into contiguous horizontal memory segments, allowing fast array lookups at the cost of maintaining multiple synchronized board states \cite{hyatt1999rotated}.
 
-  \item \textbf{Direct Lookup via Perfect Hashing (Magic Bitboards):} The modern, memory-intensive, state-of-the-art methodology \cite{tannous2007avoiding}. This technique isolates the pieces along a slider piece's ray (blocking their path) and multiplies this occupancy bitboard by a pre-calculated 64-bit integer (the "Magic Number"). Following a bit-shift, this operation yields a dense, perfect hash index used to fetch the bitboard corresponding to the coordinates visible to the sliding piece. This reduces complex ray-casting and collision detection to a handful of CPU cycles: \texttt{Mask $\rightarrow$ Multiply $\rightarrow$ Shift $\rightarrow$ Array Lookup}.
+  \item \textbf{Direct Lookup via Perfect Hashing (Magic Bitboards):} The modern, memory-intensive, state-of-the-art methodology \cite{tannous2007avoiding}. This technique isolates the pieces along a slider piece's ray (blocking their path) and multiplies this occupancy bitboard by a pre-calculated 64-bit integer (the ``Magic Number''). Following a bit-shift, this operation yields a dense, perfect hash index used to fetch the bitboard corresponding to the coordinates visible to the sliding piece. This reduces complex ray-casting and collision detection to a handful of CPU cycles: \texttt{Mask $\rightarrow$ Multiply $\rightarrow$ Shift $\rightarrow$ Array Lookup}.
 
 \end{itemize}
 

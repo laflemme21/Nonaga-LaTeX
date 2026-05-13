@@ -112,6 +112,8 @@ unmovable.
   \label{fig:unmovable_configs}
 \end{figure}
 
+A symmetric consequence of this rule governs valid \emph{destinations}. For a tile to be legally placed at a candidate cell, that cell must itself satisfy the same structural condition as a valid source position: its neighbourhood pattern must not form either of the two blocking configurations. If it did, the tile would be irremovably trapped the moment it landed, violating the game's movability invariant. Therefore, the \emph{same} bare-metal legality algorithm used to determine whether a source tile may be removed (\cref{O1 lookup}) can be directly reused to validate candidate destinations. The only adjustment required is to first remove the source tile from the board before evaluating the destination; this ensures the neighbour pattern at the destination reflects the actual post-move topology rather than one that still includes the tile in transit.
+
 
 
 \chapter{Nonaga's Branching Factor Calculation}\label[appendix]{branching}

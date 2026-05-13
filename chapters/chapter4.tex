@@ -100,7 +100,7 @@ to under one second in steady-state play.
 \subsection{Discussion}
 
 The $64$--$88\times$ NPS improvement is the product of two compounding engineering decisions rather than a single change. The primary contribution is the bitboard representation described in
-\cref{sec:core_engine_design}: replacing pointer-chasing Python objects with packed bit arrays processed by hardware bit-manipulation instructions yields the cache-efficiency gains characteristic of Data-Oriented Design~\cite{wingqvist2022dod,arantes2025impact,browne2014bitboards}. The second, equally significant contribution is the migration of every performance-critical loop in the pipeline --- move generation, legality checking, position evaluation, and the minimax kernel --- to compiled C via the Cython bridge described in \cref{sec:system_architecture}. This eliminates per-bytecode interpretation overhead and removes the GIL~\cite{beazley2010} as a throughput ceiling entirely. The two factors are not readily separable from the benchmark data alone, as no intermediate build retaining Python data structures but compiling only the loop bodies was produced; the measured speedup should therefore be understood as their combined effect.
+\cref{sec:core_engine_design}: replacing pointer-chasing Python objects with packed bit arrays processed by hardware bit-manipulation instructions yields the cache-efficiency gains characteristic of Data-Oriented Design~\cite{wingqvist2022dod,arantes2025impact,browne2014bitboards}. The second, equally significant contribution is the migration of every performance-critical loop in the pipeline, move generation, legality checking, position evaluation, and the minimax kernel, to compiled C via the Cython bridge described in \cref{sec:system_architecture}. This eliminates per-bytecode interpretation overhead and removes the GIL~\cite{beazley2010} as a throughput ceiling entirely. The two factors are not readily separable from the benchmark data alone, as no intermediate build retaining Python data structures but compiling only the loop bodies was produced; the measured speedup should therefore be understood as their combined effect.
 
 
 %% ------------------------------------------------------------
@@ -324,43 +324,65 @@ headroom for future improvement.
 \section{Genetic Algorithm Optimisation Results}
 \label{sec:ga_results}
 
-% ----------------------------------------------------------------
-%  TO BE COMPLETED — GA benchmark run in progress (2026-05-08)
-% ----------------------------------------------------------------
-%  When the benchmark data are available, populate the following:
-%
-%  §4.3.1  Convergence Analysis
-%    - Figure: line chart of mean population fitness and best-individual
-%      fitness vs generation (data: ga_metrics.csv / ga_metrics_stage_1-4.csv)
-%      PLOT D:  x = generation, y = fitness score
-%               Line 1: mean population fitness; Line 2: best individual
-%    - Describe convergence rate, any stagnation, final plateau
-%
-%  §4.3.2  Evolved Weight Analysis
-%    - Best chromosome recovered: w = [35, 14, 40, 20, 35, 40, 39, 34]
-%      (stored in parameters.json)
-%    - Figure: bar chart of evolved weights
-%      PLOT E:  x = feature index (w1..w8), y = weight value
-%               Single series: [35, 14, 40, 20, 35, 40, 39, 34]
-%    - Interpret each coefficient strategically (e.g. w2=14 = low alignment
-%      priority vs w3/w7=40 = high tile-deficit pressure)
-%
-%  §4.3.3  Tournament Validation Against Benchmark Pool
-%    - Win/draw/loss table vs stochastic, legacy-iteration, and domain-expert
-%      agents (as described in Section 3.4.3)
-%    - Discuss whether improvement over the domain-expert agent is statistically
-%      meaningful given sample size
-%
-%  §4.3.4  Limitations
-%    - Relative fitness dependency on population composition (Section 3.4.3)
-%    - Whether weights would transfer to a richer evaluation function
-% ----------------------------------------------------------------
+To validate the weight vectors produced by the GA and determine the effect of
+generation budget on solution quality, a post-optimisation round-robin tournament
+was conducted on the HPC. The best individual from every other generation of each
+of four GA runs (20, 100, 200, and 500 generations) was entered as a
+participant, yielding 414 agents in total. Every pair of agents played two games
+(one as each player, to account for any first-mover advantage), producing 826
+games per participant and a total of approximately 170{,}000 games across the
+tournament. All runs shared identical GA parameters; the sole variable between
+them was the generation budget.
 
-\noindent This section will be completed once the current GA benchmark run concludes.
-The best chromosome recovered from the completed GA stages is
-$w = [35, 14, 40, 20, 35, 40, 39, 34]$, stored in \texttt{parameters.json}.
-GA metrics for all completed stages are logged in \texttt{ga\_metrics.csv} and
-\texttt{ga\_metrics\_stage\_1-4.csv}.
+\subsection{Generational Improvement Signal}
+\label{sec:ga_improvement}
+
+The central question the tournament was designed to answer is whether the GA
+consistently produces better individuals as generation count increases. Figure~\ref{fig:spearman}
+reports the Spearman rank correlation between generation number and tournament score
+for each of the four runs. All four correlations are positive, which is consistent
+with the GA rewarding more performant genes over time. However, none reach
+statistical significance: the largest correlation observed is $\rho = 0.355$
+for GA-20 ($p = 0.28$, $n = 11$), while the longer runs, which are more
+statistically powered, produce correlations below $\rho = 0.09$. The directional consistency across all
+four independent runs is notable, but the effect is too small to survive the
+noise floor introduced by the GA configuration.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.82\textwidth]{pictures/GA/plot5_spearman.png}
+  \caption{Spearman rank correlation between generation number and round-robin
+    score for each GA run. All correlations are positive but non-significant
+    ($p > 0.05$ in all cases), indicating that generation number is not a
+    reliable predictor of individual quality under the current configuration.}
+  \label{fig:spearman}
+\end{figure}
+
+This outcome is a direct consequence of the cumulative non-determinism in the
+GA design. Roulette-wheel selection, stochastic $k$-opponent fitness evaluation,
+and random initialisation each introduce variance independently; in combination,
+they produce a fitness landscape that shifts from generation to generation.
+The original intention was to compensate for this through scale, running
+sufficiently large populations over sufficiently many generations so that genuine
+fitness improvements would emerge above the noise. In practice, the available
+compute budget was not sufficient to reach that regime, and stochastic effects
+remained dominant throughout all runs.
+
+
+\subsection{Overall Solution Quality}
+\label{sec:ga_quality}
+
+Despite the absence of a statistically significant generational improvement
+signal, the GA produces individuals that are meaningfully better than random
+parameter selection would yield. The tournament winner, drawn from GA-200 at
+generation 44 with genome $[19, 9, 33, 31, 26, 18, 30, 14]$, achieved 609
+points by winning 608 of its 826 games (73.7\%). GA-200 contributes 50\% of
+the top-10 participants in the tournament despite representing only 24.4\% of
+the pool, indicating that the run produced a disproportionate number of elite
+individuals relative to its size. These results confirm that the GA is capable
+of converging on high-quality weight configurations, even if the generational
+trajectory towards those configurations is obscured by stochastic noise.
+
 
 \section{Evaluation Summary}
 \label{sec:ch4_summary}
@@ -385,7 +407,10 @@ yielding a combined ${\approx}72\times$ total reduction. In practice, this conve
 Brute-force enumeration of the evaluation-function weight space is demonstrated to be
 computationally infeasible at any realistic scope (\cref{sec:hpc_feasibility}), with even a
 severely restricted domain requiring approximately 169~days on 46-core HPC hardware.
-The GA results, including convergence curves and tournament validation of the evolved
-weight vector $w = [35, 14, 40, 20, 35, 40, 39, 34]$ against the benchmark pool
-described in \cref{GA testing}, will complete this chapter once the current benchmark
-run concludes.
+The post-optimisation round-robin tournament (\cref{sec:ga_results}) confirms that the GA
+produces individuals of genuine quality: the tournament winner, from GA-200 at generation~44
+with genome $[19, 9, 33, 31, 26, 18, 30, 14]$, achieved a win rate of 73.7\% across
+826 games. A statistically significant generational improvement signal was not observed
+in any of the four runs, which is attributed to the cumulative non-determinism of
+roulette-wheel selection, stochastic $k$-opponent evaluation, and the limited compute
+budget available relative to the scale required to dampen these effects.

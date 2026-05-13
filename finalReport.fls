@@ -263,6 +263,8 @@ INPUT c:/texlive/2026/texmf-dist/tex/generic/bitset/bitset.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/hyperref/hpdftex.def
 INPUT c:/texlive/2026/texmf-dist/tex/latex/hyperref/hpdftex.def
 INPUT c:/texlive/2026/texmf-dist/tex/latex/hyperref/hpdftex.def
+INPUT c:/texlive/2026/texmf-dist/tex/latex/doi/doi.sty
+INPUT c:/texlive/2026/texmf-dist/tex/latex/doi/doi.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/cleveref/cleveref.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/cleveref/cleveref.sty
 INPUT ./finalReport.aux
@@ -462,6 +464,11 @@ INPUT ./pictures/Evaluation/plot_e_tt_bounds.png
 INPUT ./pictures/Evaluation/plot_e_tt_bounds.png
 INPUT ./pictures/Evaluation/plot_e_tt_bounds.png
 INPUT ./pictures/Evaluation/plot_e_tt_bounds.png
+INPUT ./pictures/GA/plot5_spearman.png
+INPUT ./pictures/GA/plot5_spearman.png
+INPUT ./pictures/GA/plot5_spearman.png
+INPUT ./pictures/GA/plot5_spearman.png
+INPUT ./pictures/GA/plot5_spearman.png
 INPUT ./finalReport.bbl
 INPUT ./finalReport.bbl
 INPUT finalReport.bbl

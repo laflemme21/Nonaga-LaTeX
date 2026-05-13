@@ -11,16 +11,16 @@ A level-1 auxiliary file: appendices.aux
 Database file #1: refs.bib
 You've used 40 entries,
             2118 wiz_defined-function locations,
-            769 strings with 10987 characters,
-and the built_in function-call counts, 13651 in all, are:
-= -- 1378
+            779 strings with 11304 characters,
+and the built_in function-call counts, 13759 in all, are:
+= -- 1402
 > -- 587
 < -- 11
 + -- 240
 - -- 193
 * -- 890
-:= -- 2219
-add.period$ -- 133
+:= -- 2243
+add.period$ -- 145
 call.type$ -- 40
 change.case$ -- 212
 chr.to.int$ -- 0
@@ -28,17 +28,17 @@ cite$ -- 40
 duplicate$ -- 537
 empty$ -- 1103
 format.name$ -- 193
-if$ -- 2928
+if$ -- 2952
 int.to.chr$ -- 0
 int.to.str$ -- 40
 missing$ -- 33
-newline$ -- 208
+newline$ -- 220
 num.names$ -- 82
-pop$ -- 237
+pop$ -- 226
 preamble$ -- 1
 purify$ -- 174
 quote$ -- 0
-skip$ -- 399
+skip$ -- 398
 stack$ -- 0
 substring$ -- 831
 swap$ -- 143
@@ -49,4 +49,4 @@ type$ -- 156
 warning$ -- 0
 while$ -- 134
 width$ -- 42
-write$ -- 456
+write$ -- 480
